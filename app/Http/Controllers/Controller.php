@@ -21,7 +21,7 @@ class Controller extends BaseController
             'status'    =>  $status
         ])->setStatusCode($status);
     }
-
+    
     // The success handler, this method is called whenever we want to return success
     public function success($data = null, string $message = '', $status = Response::HTTP_OK) {
         return $this->sendResponse($message, $data, $status);
