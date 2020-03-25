@@ -1,6 +1,7 @@
 <?php
 
 use Illuminate\Http\Request;
+// use Symfony\Component\Routing\Route;
 
 /*
 |--------------------------------------------------------------------------
@@ -15,4 +16,12 @@ use Illuminate\Http\Request;
 
 Route::middleware('auth:api')->get('/user', function (Request $request) {
     return $request->user();
+});
+
+Route::namespace('API')->group(function() {
+    // Route::middleware('auth:api', function() {
+        Route::get('spectrum', 'SpectrumApiController@index');
+        Route::post('spectrum', 'SpectrumApiController@store');
+        Route::put('spectrum/{id}', 'SpectrumApiController@update');
+    // })->only('update');
 });

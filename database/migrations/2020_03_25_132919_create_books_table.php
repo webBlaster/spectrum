@@ -4,7 +4,7 @@ use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
-class CreateBlacklistedImeisTable extends Migration
+class CreateBooksTable extends Migration
 {
     /**
      * Run the migrations.
@@ -13,10 +13,12 @@ class CreateBlacklistedImeisTable extends Migration
      */
     public function up()
     {
-        Schema::create('blacklisted_imeis', function (Blueprint $table) {
+        Schema::create('books', function (Blueprint $table) {
             $table->bigIncrements('id');
-            $table->unsignedBigInteger('user_id');
-            $table->string('imei', 18);
+            $table->string('title');
+            $table->string('author');
+            $table->string('path');
+            $table->string('front_cover');
             $table->timestamps();
         });
     }
@@ -28,6 +30,6 @@ class CreateBlacklistedImeisTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('blacklisted_imeis');
+        Schema::dropIfExists('books');
     }
 }
