@@ -4,9 +4,8 @@ namespace App\Http\Controllers\API;
 
 use App\Http\Controllers\Controller;
 use App\Http\Requests\CreateImeiRequest;
-use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Auth;
 use Exception;
-use Illuminate\Database\Eloquent\ModelNotFoundException;
 use Symfony\Component\HttpFoundation\Response;
 use Validator;
 
@@ -14,7 +13,7 @@ use App\User;
 use App\BlacklistedImei;
 use App\AccessCode;
 use App\Book;
-use Dotenv\Regex\Success;
+use BadMethodCallException;
 use Illuminate\Http\Request;
 
 class SpectrumApiController extends Controller
@@ -22,76 +21,53 @@ class SpectrumApiController extends Controller
     public function __construct()
     {
         $this->middleware('auth:api')->only('update');
+        $this->middleware('ApiKey');
     }
-   public function index()
-   {
-       //
-       return $this->success('success', 'You have successfully reached the spectrum API endpoint');
-   }
+    public function index($apiKey)
+    {
+        return $this->success('You have successfully reached the spectrum API endpoint');
+    }
 
-    public function store(CreateImeiRequest $request)
+    public function store(Request $request)
     {
         /*  try finding a user with the given imei 
         *  catch model error in case model doesn't exist
-        */
-        try {
-                // find an imei or create if not found
-                $findOrCreateImei = User::firstOrCreate(['imei' => $request->imei]);
-                
-                // check if imei is found or created
-                if($findOrCreateImei) {
-
-                    // checks if imei isn't blacklisted
-                    // $blacklisted = BlacklistedImei::where('imei', $request->imei)->first();
-                    if($findOrCreateImei->blackListedImei) {
-                        return $this->success('Blocked', 'imei Blacklisted', Response::HTTP_LOCKED);
-                    }
-
-                    // check if user has an access code
-                    if (!empty($findOrCreateImei->access_code)) {
-                        // What should happen to a user that has an access code already
-                        return $this->success('Success', 'User Has Valid Code', Response::HTTP_FOUND);
-                    } else {
-                        // Generate token for user authentication
-                        $token = $findOrCreateImei->createToken('Access Token')->accessToken;
-                        return response()->json(['token' => $token, 'expires_in' => '60 minutes', 'user_id'=>$findOrCreateImei->id], Response::HTTP_OK);
-                    }
-                    
+        */      $validator = Validator::make($request->all(), [
+                    'imei' => 'required'
+                ]);
+                if($validator->fails())
+                {
+                    return $this->failed($validator->errors());
                 }
-
-
-
-                // $checkIfImeiExists = User::where('imei', $request->imei)->first();
-
-                // same as select * from users
-                // $checkIfImeiExists = DB::select('select * from users where imei = ? ', [$request->imei]);
-                // if($checkIfImeiExists) {
-                //     $blacklisted = BlacklistedImei::where('imei', $request->imei)->first();
-                //     if($blacklisted) {
-                //         return $this->success('imei Blacklisted');
-                //     }
-                //     if (!empty($checkIfImeiExists->access_code)) {
-                //         return response()->json('User Has Valid Code');
-                //     } else {
-                //         $imeiStatus = 1;
-                //     }
+                try {
+                    // find an imei or create if not found
+                    $findOrCreateImei = User::firstOrCreate(['imei' => $request->imei]);
                     
-                // }
-                
-                // if ($imeiStatus !== 0) {
-                //     return $this->success(['callback'=>'Imei Exist but no user data']);
-                // } else {
-                //     $user = User::create(['imei'=> $request->imei]);
-                //     $token = $user->createToken('Access Token')->accessToken;
-                //     return response()->json(['token' => $token, 'expires_in' => '60 minutes'], Response::HTTP_OK);
-                // }
-                
-        }
-        catch(Exception $e) {
-            // return $e;
-            return $this->failed('Query Error', 'error in database query');
-        }
-        
+                    // check if imei is found or created
+                    if($findOrCreateImei) {
+
+                        // checks if imei isn't blacklisted
+                        // $blacklisted = BlacklistedImei::where('imei', $request->imei)->first();
+                        if($findOrCreateImei->blackListedImei) {
+                            return $this->failed('The requested IMEI is blacklisted');
+                        }
+
+                        // check if user has an access code
+                        if (!empty($findOrCreateImei->access_code)) {
+                            // What should happen to a user that has an access code already
+                            return $this->success('User Imei is confirmed and has a valid code');
+                        } else {
+                            // Generate token for user authentication
+                            $token = $findOrCreateImei->createToken('Access Token')->accessToken;
+                            return response()->json(['token' => $token, 'expires_in' => '60 minutes', 'user_id'=>$findOrCreateImei->uuid], Response::HTTP_OK);
+                        }
+                        
+                    }
+            }
+            catch(Exception $e) {
+                return $e;
+                return $this->failed('Query Error: Failed to query the database');
+            }    
         
         
         
@@ -101,23 +77,23 @@ class SpectrumApiController extends Controller
         return $attempt + 1;
     }
     
-    public function update(Request $request, $id)
+    public function update(Request $request, $uuid)
     {    
         // check if a user is authenticated
         $user = Auth('api')->user();
 
         // check if the user making a request is the same as the authenticated user
-        if ($user->id == $id) {
+        if ($user->uuid == $uuid) {
             // get login attempt from database
             $login_attempt = $user->login_attempt;
 
             // check if login attempt is less than 5
             if($login_attempt >= 5 && !$user->blackListedImei) {
                 BlackListedImei::create(['user_id'=>$user->id, 'imei'=>$user->imei]);
-                return $this->success('error', 'Too many login attempts', Response::HTTP_LOCKED);
+                return $this->failed('Too many login attempts');
                 
             } elseif($login_attempt >= 5 && $user->blackListedImei){
-                return $this->failed('error', 'Too many login attempts', Response::HTTP_LOCKED);
+                return $this->failed('Too many login attempts');
             } else {
                 // validates user's input
                 $validator = Validator::make($request->all(), [
@@ -129,14 +105,14 @@ class SpectrumApiController extends Controller
                 ]);
                 if($validator->fails())
                 {
-                    return $this->failed('error', $validator->errors(), Response::HTTP_EXPECTATION_FAILED);
+                    return $this->failed($validator->errors());
                 }
 
                 // check if access code exists
                 $confirmAccessCode = AccessCode::where('code', $request->access_code)->first();
                 if(!$confirmAccessCode) {
                     $user->update(['login_attempt' => $this->loginAttempt($login_attempt)]);
-                    return $this->failed('error', 'Invalid Access Code', Response::HTTP_UNPROCESSABLE_ENTITY);
+                    return $this->failed('Invalid Access Code');
                 } else {
                     $usageCount = User::where('access_code', '=', $request->access_code)->count();
                     if($usageCount < $confirmAccessCode->max_number_of_users) {
@@ -155,13 +131,13 @@ class SpectrumApiController extends Controller
                         }
                     } else {
                         $user->update(['login_attempt' => $this->loginAttempt($login_attempt)]);
-                        return $this->success('error', 'Invalid Access Code', Response::HTTP_UNPROCESSABLE_ENTITY);
+                        return $this->failed('Invalid Access Code');
                     }
                 }
             }
 
         } else {
-            return $this->success('Authentication failed', 'wrong authentication token', Response::HTTP_UNAUTHORIZED);
+            return $this->failed('wrong authentication token');
         }
    }
 
