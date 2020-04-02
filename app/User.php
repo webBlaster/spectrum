@@ -2,14 +2,14 @@
 
 namespace App;
 
-use Illuminate\Contracts\Auth\MustVerifyEmail;
+use BinaryCabin\LaravelUUID\Traits\HasUUID;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
 use Laravel\Passport\HasApiTokens;
 
 class User extends Authenticatable
 {
-    use HasApiTokens, Notifiable;
+    use HasApiTokens, Notifiable, HasUUID;
 
     /**
      * The attributes that are mass assignable.
@@ -17,7 +17,7 @@ class User extends Authenticatable
      * @var array
      */
     protected $fillable = [
-        'email', 'first_name', 'last_name', 'phone', 'imei', 'password', 'login_attempt', 'access_code'
+        'email', 'first_name', 'last_name', 'phone', 'imei', 'password', 'login_attempt', 'access_code', 'uuid'
     ];
 
     /**
