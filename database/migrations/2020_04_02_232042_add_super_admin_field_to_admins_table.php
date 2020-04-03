@@ -4,7 +4,7 @@ use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
-class CreateAdminsTable extends Migration
+class AddSuperAdminFieldToAdminsTable extends Migration
 {
     /**
      * Run the migrations.
@@ -13,13 +13,8 @@ class CreateAdminsTable extends Migration
      */
     public function up()
     {
-        Schema::create('admins', function (Blueprint $table) {
-            $table->bigIncrements('id');
-            $table->string('name');
-            $table->string('username');
-            $table->string('password');
-            $table->softDeletes();
-            $table->timestamps();
+        Schema::table('admins', function (Blueprint $table) {
+            $table->boolean('is_super_admin')->after('password')->nullable()->default(false);
         });
     }
 
@@ -30,6 +25,8 @@ class CreateAdminsTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('admins');
+        Schema::table('admins', function (Blueprint $table) {
+           $table->dropColumn('is_super_admin');
+        });
     }
 }
