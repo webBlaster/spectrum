@@ -11,6 +11,19 @@ use Illuminate\Foundation\Auth\ThrottlesLogins;
 
 class SpectrumAdminController extends Controller
 {
+
+
+    /**
+     * Only guests for "admin" guard are allowed except
+     * for logout.
+     *
+     * @return void
+     */
+    public function __construct()
+    {
+        $this->middleware('auth:admin');
+    }
+
     /**
      * Display a listing of the resource.
      *
@@ -127,34 +140,55 @@ class SpectrumAdminController extends Controller
 
     public function login(Request $request)
     {
-        if(Auth::guard('admin')->attempt($request->only('username','password'),$request->filled('remember'))){
-
+        if (
+            Auth::guard('admin')->attempt(
+                $request->only('username', 'password'),
+                $request->filled('remember')
+            )
+        ) {
             // dd(Auth::guard('admin')->user()->status);
 
             if (Auth::guard('admin')->user()->status == 0) {
-
                 return redirect()
-                ->back()
-                ->withInput()
-                ->with('fail','Your account has not been activated yet.!');
-
+                    ->back()
+                    ->withInput()
+                    ->with('fail', 'Your account has not been activated yet.!');
             } else {
                 # code...
             }
 
             return redirect()
                 ->intended(route('admin/dashbard'))
-                ->with('success','You are successfully Logged in as Admin!');
+                ->with('success', 'You are successfully Logged in as Admin!');
         }
 
         //Authentication failed...
         return $this->loginFailed();
     }
 
-    private function loginFailed(){
+    private function loginFailed()
+    {
         return redirect()
             ->back()
             ->withInput()
-            ->with('error','Login failed, please try again!');
+            ->with('error', 'Login failed, please try again!');
+    }
+
+    public function logout()
+    {
+        Auth::guard('admin')->logout();
+        return redirect()
+            ->route('admin.login')
+            ->with('success', 'Admin has been logged out!');
+    }
+
+    public function show_access_keys()
+    {
+        return view('admin.show-access-keys');
+    }
+
+    public function audit_logs()
+    {
+        return view('admin.audit-logs');
     }
 }
