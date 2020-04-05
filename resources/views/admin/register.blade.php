@@ -1,8 +1,9 @@
 <!DOCTYPE html>
 <html lang="en">
-
 <head>
     <meta charset="UTF-8">
+    <!-- CSRF Token -->
+    <meta name="csrf-token" content="{{ csrf_token() }}">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
     <title>Register - Spectrum Admin Portal</title>
@@ -49,7 +50,7 @@
                                                 <div
                                                     class="mdc-layout-grid__cell stretch-card mdc-layout-grid__cell--span-12-desktop">
                                                     <div class="mdc-text-field w-100">
-                                                        <input type="text" name="name" required class="mdc-text-field__input" id="text-field-hero-input">
+                                                        <input type="text" name="name" required class="mdc-text-field__input" id="text-field-hero-input" value="{{old('name') ?: old('name') }}" required autocomplete="name">
                                                         <div class="mdc-line-ripple"></div>
                                                         <label for="text-field-hero-input"
                                                             class="mdc-floating-label">Full Name</label>
@@ -58,7 +59,7 @@
                                                 <div
                                                     class="mdc-layout-grid__cell stretch-card mdc-layout-grid__cell--span-12-desktop">
                                                     <div class="mdc-text-field w-100">
-                                                        <input type="text" name="username" required class="mdc-text-field__input" id="text-field-hero-input">
+                                                        <input type="text" name="username" required class="mdc-text-field__input" id="text-field-hero-input" value="{{old('username') ?: old('username') }}" autocomplete="username">
                                                         <div class="mdc-line-ripple"></div>
                                                         <label for="text-field-hero-input"
                                                             class="mdc-floating-label">Username</label>
@@ -67,7 +68,7 @@
                                                 <div
                                                     class="mdc-layout-grid__cell stretch-card mdc-layout-grid__cell--span-12">
                                                     <div class="mdc-text-field w-100">
-                                                        <input name="email" required class="mdc-text-field__input" type="email" id="text-field-hero-input">
+                                                        <input name="email" required class="mdc-text-field__input" type="email" id="text-field-hero-input" value="{{old('email') ?: old('email') }}" autocomplete="email">
                                                         <div class="mdc-line-ripple"></div>
                                                         <label for="text-field-hero-input"
                                                             class="mdc-floating-label">Email</label>
@@ -76,7 +77,7 @@
                                                 <div
                                                     class="mdc-layout-grid__cell stretch-card mdc-layout-grid__cell--span-12">
                                                     <div class="mdc-text-field w-100">
-                                                        <input class="mdc-text-field__input" required name="phone" type="tel" id="text-field-hero-input">
+                                                        <input class="mdc-text-field__input" required name="phone" type="tel" id="text-field-hero-input" value="{{old('phone') ?: old('phone') }}" autocomplete="phone">
                                                         <div class="mdc-line-ripple"></div>
                                                         <label for="text-field-hero-input"
                                                             class="mdc-floating-label">Phone Number</label>

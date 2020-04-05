@@ -10,27 +10,23 @@ use Carbon\Carbon;
 | contains the "web" middleware group. Now create something great!
 |
 */
-
-Route::get('/', function () {
-    return view('welcome');
-});
-
-Auth::routes();
-
-Route::get('/home', 'HomeController@index')->name('home');
-
+// Auth::routes();
 Route::group(['prefix' => 'admin',  'namespace' => 'Admin'], function () {
+    Route::group(['namespace' => 'Auth'], function () {
+        Route::get('/register', 'SpectrumAdminAuthController@create');
+        Route::post('/register', 'SpectrumAdminAuthController@store')->name('admin/register');
 
-    Route::get('/register', 'SpectrumAdminController@create');
-    Route::post('/register', 'SpectrumAdminController@store')->name('admin/register');
+        Route::get('/login', 'SpectrumAdminAuthController@show_login_page')->name('admin/login');
+        Route::post('/login', 'SpectrumAdminAuthController@login');
 
-    Route::get('/login', 'SpectrumAdminController@show_login_page')->name('admin/login')->middleware('guest:admin');
-    Route::post('/login', 'SpectrumAdminController@login');
+        
+        Route::post('/logout', 'SpectrumAdminAuthController@logout')->name('admin.logout');
+    });
 
-    Route::get('/dashboard', 'SpectrumAdminController@index')->name('admin/dashbard')->middleware('auth:admin');
-    Route::get('/manage-access-keys', 'SpectrumAdminController@show_access_keys')->middleware('auth:admin');
+    Route::get('/dashboard', 'SpectrumAdminDashboardController@index')->name('admin/dashbard');
+    Route::get('/manage-access-keys', 'SpectrumAdminDashboardController@show_access_keys');
 
-    Route::get('/audit-logs', 'SpectrumAdminController@audit_logs');
+    Route::get('/audit-logs', 'SpectrumAdminDashboardController@audit_logs');
 
 });
 

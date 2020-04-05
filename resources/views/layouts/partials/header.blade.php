@@ -3,7 +3,7 @@
     <div class="mdc-top-app-bar__row">
       <div class="mdc-top-app-bar__section mdc-top-app-bar__section--align-start">
         <button class="material-icons mdc-top-app-bar__navigation-icon mdc-icon-button sidebar-toggler">menu</button>
-        <span class="mdc-top-app-bar__title">Greetings.</span>
+        <span class="mdc-top-app-bar__title">Greetings {{Auth::guard('admin')->user()->name}}</span>
         <div class="mdc-text-field mdc-text-field--outlined mdc-text-field--with-leading-icon search-text-field d-none d-md-flex">
           <i class="material-icons mdc-text-field__icon">search</i>
           <input class="mdc-text-field__input" id="text-field-hero-input">
@@ -20,10 +20,7 @@
         <div class="menu-button-container menu-profile d-none d-md-block">
           <button class="mdc-button mdc-menu-button">
             <span class="d-flex align-items-center">
-              <span class="figure">
-                <img src="{{ asset('images/faces/face1.jpg') }}" alt="user" class="user">
-              </span>
-              <span class="user-name">Feyi</span>
+              <span class="user-name">{{Auth::guard('admin')->user()->username}}</span>
             </span>
           </button>
           <div class="mdc-menu mdc-menu-surface" tabindex="-1">

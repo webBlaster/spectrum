@@ -8,7 +8,6 @@
     </div>
     <div class="mdc-drawer__content">
         <div class="user-info">
-            <p class="name">{{ Auth::guard('admin')->user()->name }}</p>
             <p class="email">{{ Auth::guard('admin')->user()->email }}</p>
         </div>
         <div class="mdc-list-group">
@@ -74,7 +73,15 @@
                 <div class="profile-actions">
                     <a href="javascript:;">Settings</a>
                     <span class="divider"></span>
-                    <a href="javascript:;">Logout</a>
+                    <a href="{{ route('admin.logout') }}"
+                        onclick="event.preventDefault();
+                        document.getElementById('logout-form').submit();">
+                        {{ __('Logout') }}
+                    </a>
+      
+                    <form id="logout-form" action="{{ route('admin.logout') }}" method="POST" style="display: none;">
+                        @csrf
+                    </form>
                 </div>
 
         </div>

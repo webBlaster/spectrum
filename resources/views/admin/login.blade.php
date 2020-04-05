@@ -3,6 +3,8 @@
 
 <head>
     <meta charset="UTF-8">
+    <!-- CSRF Token -->
+    <meta name="csrf-token" content="{{ csrf_token() }}">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
     <title>Login - Spectrum Admin Portal</title>
@@ -23,7 +25,7 @@
 <body>
     <script src="{{ asset('js/preloader.js')}}"></script>
     <div class="body-wrapper">
-        <div class="main-wrapper">
+        <div class="main-wrapper"  id="app">
             <div class="page-wrapper full-page-wrapper d-flex align-items-center justify-content-center">
                 <main class="auth-page">
                     <div class="mdc-layout-grid">
@@ -35,22 +37,12 @@
                                 class="mdc-layout-grid__cell stretch-card mdc-layout-grid__cell--span-4-desktop mdc-layout-grid__cell--span-6-tablet">
                                 <div class="mdc-card">
                                     @if ($errors->any())
-                                    <div class="alert alert-danger">
-                                        <ul>
-                                            @foreach ($errors->all() as $error)
-                                            <li>{{ $error }}</li>
-                                            @endforeach
-                                        </ul>
-                                    </div>
+                                        <flash-error message="{{$errors->first()}}"></flash-error>
                                     @endif
                                     @if(Session::has('success'))
-                                    <div class="alert alert-success">
-                                        <p>{{ Session::get('success') }}</p>
-                                    </div>
+                                    <flash-success message="{{ Session::get('success') }} "></flash-success>
                                     @elseif(Session::has('fail'))
-                                    <div class="alert alert-danger">
-                                        <p>{{ Session::get('fail') }}</p>
-                                    </div>
+                                        <flash-error message="{{ Session::get('fail') }}"></flash-error>
                                     @endif
                                     <form action="{{ route('admin/login') }}" method="POST">
                                         @csrf
@@ -60,7 +52,7 @@
                                                     class="mdc-layout-grid__cell stretch-card mdc-layout-grid__cell--span-12">
                                                     <div class="mdc-text-field w-100">
                                                         <input class="mdc-text-field__input" name="username"
-                                                            id="text-field-hero-input">
+                                                            id="text-field-hero-input" value="{{old('username') ?: old('username') }}" required autocomplete="username">
                                                         <div class="mdc-line-ripple"></div>
                                                         <label for="text-field-hero-input"
                                                             class="mdc-floating-label">Username</label>
@@ -70,7 +62,7 @@
                                                     class="mdc-layout-grid__cell stretch-card mdc-layout-grid__cell--span-12">
                                                     <div class="mdc-text-field w-100">
                                                         <input class="mdc-text-field__input" name="password"
-                                                            type="password" id="text-field-hero-input">
+                                                            type="password" id="text-field-hero-input" required>
                                                         <div class="mdc-line-ripple"></div>
                                                         <label for="text-field-hero-input"
                                                             class="mdc-floating-label">Password</label>
@@ -101,7 +93,7 @@
                                                 </div>
                                                 <div
                                                     class="mdc-layout-grid__cell stretch-card mdc-layout-grid__cell--span-6-desktop d-flex align-items-center justify-content-end">
-                                                    <a href="register.html">Create New Account</a>
+                                                    <a href="{{ url('admin/register') }}">Create New Account</a>
                                                 </div>
                                                 <div
                                                     class="mdc-layout-grid__cell stretch-card mdc-layout-grid__cell--span-12">
@@ -123,7 +115,8 @@
             </div>
         </div>
     </div>
-
+    
+    <script src="{{ asset('js/app.js')}}"></script>
     <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js"
         integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous">
     </script>
