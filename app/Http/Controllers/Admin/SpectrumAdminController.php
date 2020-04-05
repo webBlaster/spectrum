@@ -7,7 +7,8 @@ use Illuminate\Http\Request;
 use App\Admin;
 use Illuminate\Support\Facades\Hash;
 use Auth;
-use Illuminate\Foundation\Auth\ThrottlesLogins;
+use Illuminate\Validation\ValidationException;
+
 
 class SpectrumAdminController extends Controller
 {
@@ -125,13 +126,29 @@ class SpectrumAdminController extends Controller
         return view('admin.login');
     }
 
+    protected function sendFailedLoginResponse(Request $request)
+    {
+        throw ValidationException::withMessages([
+            'username' => [trans('auth.failed')],
+        ]);
+    }
+    protected function validateLogin(Request $request)
+    {
+        $request->validate([
+            'username' => 'required|string',
+            'password' => 'required|string',
+        ]);
+    }
+
     public function login(Request $request)
     {
+        $this->validateLogin($request);
+
         if(Auth::guard('admin')->attempt($request->only('username','password'),$request->filled('remember'))){
 
             // dd(Auth::guard('admin')->user()->status);
 
-            if (Auth::guard('admin')->user()->status == 0) {
+            if(Auth::guard('admin')->user()->status == 0) {
 
                 return redirect()
                 ->back()
@@ -139,22 +156,18 @@ class SpectrumAdminController extends Controller
                 ->with('fail','Your account has not been activated yet.!');
 
             } else {
-                # code...
+                $request->session()->regenerate();
+                return $this->authenticated($request, Auth::guard('admin')->user())
+                ?: redirect('admin/dashboard');
             }
 
-            return redirect()
-                ->intended(route('admin/dashbard'))
-                ->with('success','You are successfully Logged in as Admin!');
         }
 
-        //Authentication failed...
-        return $this->loginFailed();
+        return $this->sendFailedLoginResponse($request);
     }
 
-    private function loginFailed(){
-        return redirect()
-            ->back()
-            ->withInput()
-            ->with('error','Login failed, please try again!');
+    protected function authenticated(Request $request, $user)
+    {
+        //
     }
 }

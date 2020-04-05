@@ -36,11 +36,7 @@
                                 <div class="mdc-card">
                                     @if ($errors->any())
                                     <div class="alert alert-danger">
-                                        <ul>
-                                            @foreach ($errors->all() as $error)
-                                            <li>{{ $error }}</li>
-                                            @endforeach
-                                        </ul>
+                                        {{$errors->first()}}
                                     </div>
                                     @endif
                                     @if(Session::has('success'))
@@ -52,6 +48,7 @@
                                         <p>{{ Session::get('fail') }}</p>
                                     </div>
                                     @endif
+
                                     <form action="{{ route('admin/login') }}" method="POST">
                                         @csrf
                                         <div class="mdc-layout-grid">
@@ -60,7 +57,7 @@
                                                     class="mdc-layout-grid__cell stretch-card mdc-layout-grid__cell--span-12">
                                                     <div class="mdc-text-field w-100">
                                                         <input class="mdc-text-field__input" name="username"
-                                                            id="text-field-hero-input">
+                                                            id="text-field-hero-input" value="{{old('username') ?: old('username') }}" required autocomplete="login" >
                                                         <div class="mdc-line-ripple"></div>
                                                         <label for="text-field-hero-input"
                                                             class="mdc-floating-label">Username</label>
@@ -70,7 +67,7 @@
                                                     class="mdc-layout-grid__cell stretch-card mdc-layout-grid__cell--span-12">
                                                     <div class="mdc-text-field w-100">
                                                         <input class="mdc-text-field__input" name="password"
-                                                            type="password" id="text-field-hero-input">
+                                                            type="password" id="text-field-hero-input" required>
                                                         <div class="mdc-line-ripple"></div>
                                                         <label for="text-field-hero-input"
                                                             class="mdc-floating-label">Password</label>
