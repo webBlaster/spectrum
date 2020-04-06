@@ -1,20 +1,22 @@
 <?php
 
-namespace App\Http\Controllers\License;
+namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
+use App\Notification;
 
-class SpectrumLicenseController extends Controller
+class AdminNotificationController extends Controller
 {
-    /**
-     * Display a listing of the resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
+    
+    public function __construct()
+    {
+        $this->middleware('auth.custom');
+    }
     public function index()
     {
-        return view('licenses.user-licenses');
+        //
     }
 
     /**
@@ -25,8 +27,6 @@ class SpectrumLicenseController extends Controller
     public function create()
     {
         //
-
-        return view('licenses.generated-licenses');
     }
 
     /**
@@ -37,7 +37,18 @@ class SpectrumLicenseController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $user = Auth::guard('admin')->user();
+        $this->validate($request, [
+            'title' => ['required', 'string', 'max:150'],
+            'notification' => ['required', 'string'],
+        ]);
+        Notification::create([
+            'title'=>$request->title, 
+            'notification'=>$request->notification, 
+            'created_by'=>$user->uuid
+        ]);
+
+        return ['Success', $user];
     }
 
     /**
@@ -83,10 +94,5 @@ class SpectrumLicenseController extends Controller
     public function destroy($id)
     {
         //
-    }
-
-    public function view_accounts()
-    {
-        return view('licenses.view-accounts');
     }
 }

@@ -6,6 +6,10 @@ use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use App\Admin;
 use Auth;
+use App\User;
+use App\License;
+use App\Book;
+
 class SpectrumAdminDashboardController extends Controller
 {
 
@@ -28,7 +32,10 @@ class SpectrumAdminDashboardController extends Controller
      */
     public function index()
     {
-        return view('admin.dashboard');
+        $user = new User();
+        $book = new Book();
+
+        return view('admin.dashboard', compact('user', 'book'));
     }
 
     

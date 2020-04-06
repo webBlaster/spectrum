@@ -41,4 +41,12 @@ class User extends Authenticatable
     public function blackListedImei() {
         return $this->hasOne('App\BlacklistedImei');
     }
+
+    public function users_count() {
+        return $this->all()->count();
+    }
+
+    public function count_users_with_license() {
+        return $this->where('access_code', '<>', '')->count();
+    }
 }

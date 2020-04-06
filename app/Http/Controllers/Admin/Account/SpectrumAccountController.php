@@ -1,11 +1,11 @@
 <?php
 
-namespace App\Http\Controllers\Books;
+namespace App\Http\Controllers\Admin\Account;
 
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 
-class SpectrumBooksController extends Controller
+class SpectrumAccountController extends Controller
 {
     /**
      * Display a listing of the resource.
@@ -14,7 +14,7 @@ class SpectrumBooksController extends Controller
      */
     public function index()
     {
-        return view('books.uploaded-books');
+        return view('accounts.activate-accounts');
     }
 
     /**

@@ -102,7 +102,7 @@
                         </a>
                     </div>
                     <div class="mdc-list-item mdc-drawer-item">
-                        <a class="mdc-drawer-link" href="{{ url('/licenses/accounting-module') }}">
+                        <a class="mdc-drawer-link" href="{{ url('admin/licenses/accounting-module') }}">
                             <i class="material-icons mdc-list-item__start-detail mdc-drawer-item-icon"
                                 aria-hidden="true">euro_symbol</i>
                             Accounting Module

@@ -7,4 +7,9 @@ use Illuminate\Database\Eloquent\Model;
 class Book extends Model
 {
     //
+    protected $fillable = ['title', 'author', 'path', 'front_cover'];
+    
+    public function book_count() {
+        return $this->all()->count();
+    }
 }

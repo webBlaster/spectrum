@@ -1,11 +1,11 @@
 <?php
 
-namespace App\Http\Controllers\Account;
+namespace App\Http\Controllers\Admin\License;
 
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 
-class SpectrumAccountController extends Controller
+class SpectrumLicenseController extends Controller
 {
     /**
      * Display a listing of the resource.
@@ -14,7 +14,7 @@ class SpectrumAccountController extends Controller
      */
     public function index()
     {
-        return view('accounts.activate-accounts');
+        return view('licenses.user-licenses');
     }
 
     /**
@@ -25,6 +25,8 @@ class SpectrumAccountController extends Controller
     public function create()
     {
         //
+
+        return view('licenses.generated-licenses');
     }
 
     /**
@@ -81,5 +83,10 @@ class SpectrumAccountController extends Controller
     public function destroy($id)
     {
         //
+    }
+
+    public function view_accounts()
+    {
+        return view('licenses.view-accounts');
     }
 }

@@ -5,10 +5,27 @@
  */
 
 require('./bootstrap');
+
+import { BootstrapVue, IconsPlugin } from 'bootstrap-vue';
+import 'bootstrap-vue/dist/bootstrap-vue.css';
+import 'bootstrap/dist/css/bootstrap.css';
 import VueProgressBar from 'vue-progressbar';
+import { Form, HasError, AlertError } from 'vform';
 import swal from 'sweetalert2';
 
+
 window.Vue = require('vue');
+window.Form = Form;
+
+Vue.component(HasError.name, HasError);
+Vue.component(AlertError.name, AlertError);
+
+Vue.use(BootstrapVue);
+Vue.use(IconsPlugin);
+Vue.config.productionTip = false;
+
+
+
 window.events = new Vue();
 window.flash = function(message) {
     window.events.$emit('flash', message);
@@ -21,8 +38,8 @@ const toast  = swal.mixin({
     showConfirmButton:false,
     timerProgressBar: true,
     onOpen: (toast) => {
-        toast.addEventListener('mouseenter', Swal.stopTimer)
-        toast.addEventListener('mouseleave', Swal.resumeTimer)
+        toast.addEventListener('mouseenter', swal.stopTimer);
+        toast.addEventListener('mouseleave', swal.resumeTimer);
     },
     timer:5000
 });
@@ -59,6 +76,7 @@ window.Fire = new Vue();
 
 Vue.component('flash-error', require('./components/FlashError.vue').default);
 Vue.component('flash-success', require('./components/FlashSuccess.vue').default);
+Vue.component('notify-user', require('./components/NotifyUser.vue').default);
 
 /**
  * Next, we will create a fresh Vue application instance and attach it to
@@ -69,3 +87,4 @@ Vue.component('flash-success', require('./components/FlashSuccess.vue').default)
 const app = new Vue({
     el: '#app',
 });
+
