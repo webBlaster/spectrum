@@ -11,10 +11,10 @@
         <ul class="mdc-list">
           <li class="mdc-list-item mdc-list-item--selected" data-value="" aria-selected="true">
           </li>
-         <a href="{{ url('licenses/single-licenses') }}"><li class="mdc-list-item" data-value="grains">
+         <a href="{{ url('admin/licenses/single-licenses') }}"><li class="mdc-list-item" data-value="grains">
             Single
           </li></a>
-          <a href="{{ url('licenses/group-licenses') }}"><li class="mdc-list-item" data-value="vegetables">
+          <a href="{{ url('admin/licenses/group-licenses') }}"><li class="mdc-list-item" data-value="vegetables">
             Group
           </li></a>
 

@@ -28,25 +28,25 @@ Route::group(['prefix' => 'admin',  'namespace' => 'Admin'], function () {
 
     Route::get('/audit-logs', 'SpectrumAdminDashboardController@audit_logs');
 
+    Route::group(['prefix' => 'licenses', 'namespace' => 'License'], function() {
+    
+        Route::get('/user-licenses', 'SpectrumLicenseController@index');
+        Route::get('/single-licenses', 'SpectrumLicenseController@index');
+        Route::get('/group-licenses', 'SpectrumLicenseController@index');
+    
+        Route::get('/generated-licenses', 'SpectrumLicenseController@create');
+    
+        Route::get('/accounting-module', 'SpectrumLicenseController@view_Accounts');
+    
+    });
+    
+    Route::group(['prefix' => 'books', 'namespace' => 'Books'], function() {
+    
+        Route::get('/uploaded-books', 'SpectrumBooksController@index');
+    
+    });
 });
 
-Route::group(['prefix' => 'licenses', 'namespace' => 'License'], function() {
-
-    Route::get('/user-licenses', 'SpectrumLicenseController@index');
-    Route::get('/single-licenses', 'SpectrumLicenseController@index');
-    Route::get('/group-licenses', 'SpectrumLicenseController@index');
-
-    Route::get('/generated-licenses', 'SpectrumLicenseController@create');
-
-    Route::get('/accounting-module', 'SpectrumLicenseController@view_Accounts');
-
-});
-
-Route::group(['prefix' => 'books', 'namespace' => 'Books'], function() {
-
-    Route::get('/uploaded-books', 'SpectrumBooksController@index');
-
-});
 
 Route::group(['prefix' => 'accounts',  'namespace' => 'Account'], function () {
 
