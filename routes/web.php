@@ -10,6 +10,10 @@ use Carbon\Carbon;
 | contains the "web" middleware group. Now create something great!
 |
 */
+
+Route::get('/', function(){
+    return redirect('admin\dashboard');
+});
 // Auth::routes();
 Route::group(['prefix' => 'admin',  'namespace' => 'Admin'], function () {
 
@@ -53,6 +57,10 @@ Route::group(['prefix' => 'admin',  'namespace' => 'Admin'], function () {
     Route::group(['prefix' => 'accounts',  'namespace' => 'Account'], function () {
 
         Route::get('/activate-accounts', 'SpectrumAccountController@index');
+        Route::get('/load-accounts/{status}', 'SpectrumAccountController@create');
+        Route::delete('/delete-account/{id}', 'SpectrumAccountController@destroy');
+        Route::put('/activate-account/{id}', 'SpectrumAccountController@activate_account');
+        Route::put('/alter-priviledge/{id}', 'SpectrumAccountController@switch_privilege');
 
     });
 });

@@ -1,6 +1,6 @@
 <template>
     <div class="slert alert-danger alert" role='alert' v-show="show">
-        <strong>Success</strong> {{body}}
+        <strong>Failed!</strong> {{body}}
     </div>
 </template>
 

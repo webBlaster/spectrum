@@ -10,6 +10,7 @@ import { BootstrapVue, IconsPlugin } from 'bootstrap-vue';
 import 'bootstrap-vue/dist/bootstrap-vue.css';
 import 'bootstrap/dist/css/bootstrap.css';
 import VueProgressBar from 'vue-progressbar';
+import moment from 'moment';
 import { Form, HasError, AlertError } from 'vform';
 import swal from 'sweetalert2';
 
@@ -54,14 +55,16 @@ const options = {
         opacity: '0.6s',
         termination: 300
     },
+    autoFinish: false,
     autoRevert: true,
     location: 'top',
     inverse: false
-}
+};
 Vue.use(VueProgressBar, options);
 
 window.Fire = new Vue();
 
+Vue.filter('humanDate', (date) => moment(date).fromNow());
 
 /**
  * The following block of code may be used to automatically register your
@@ -77,6 +80,7 @@ window.Fire = new Vue();
 Vue.component('flash-error', require('./components/FlashError.vue').default);
 Vue.component('flash-success', require('./components/FlashSuccess.vue').default);
 Vue.component('notify-user', require('./components/NotifyUser.vue').default);
+Vue.component('account-activation', require('./components/AccountActivation.vue').default);
 
 /**
  * Next, we will create a fresh Vue application instance and attach it to

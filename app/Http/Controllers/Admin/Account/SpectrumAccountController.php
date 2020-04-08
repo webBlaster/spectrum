@@ -4,14 +4,14 @@ namespace App\Http\Controllers\Admin\Account;
 
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
-
+use App\Admin;
 class SpectrumAccountController extends Controller
 {
-    /**
-     * Display a listing of the resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
+    
+    public function __construct() {
+        $this->middleware('auth.custom');
+    }
+    
     public function index()
     {
         return view('accounts.activate-accounts');
@@ -22,9 +22,18 @@ class SpectrumAccountController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function create()
+    public function create($status)
     {
-        //
+        $user = new Admin();
+        if($status == 'activated') {
+            $activation_status = $user->fetch_activated_user();
+            return response()->json($activation_status);
+        } elseif ($status == 'unactivated') {
+            $activation_status = $user->fetch_unactivated_user();
+            return response()->json($activation_status);
+        }
+
+        return null;
     }
 
     /**
@@ -38,35 +47,27 @@ class SpectrumAccountController extends Controller
         //
     }
 
-    /**
-     * Display the specified resource.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function show($id)
+    public function switch_privilege($id)
     {
-        //
+        if(Admin::where('uuid', $id)->where('status', 1)->where('is_super_admin', 0)->update(['is_super_admin' => 1])){
+            return ['success', "User is now a Super Admin"];
+        }
+        elseif(Admin::where('uuid', $id)->where('status', 1)->where('is_super_admin', 1)->update(['is_super_admin' => 0])) {
+            return ['success', "User is now an Admin"];
+        } 
     }
 
-    /**
-     * Show the form for editing the specified resource.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function edit($id)
+    public function activate_account($id)
     {
-        //
+        if(Admin::where('uuid', $id)->where('status', 0)->update(['status' => 1])){
+            return ['success', "Account Activated"];
+        }
+        elseif(Admin::where('uuid', $id)->where('status', 1)->update(['status' => 0])) {
+            return ['success', "Account Deactivated"];
+        } 
+        
     }
 
-    /**
-     * Update the specified resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
     public function update(Request $request, $id)
     {
         //
@@ -79,7 +80,10 @@ class SpectrumAccountController extends Controller
      * @return \Illuminate\Http\Response
      */
     public function destroy($id)
-    {
-        //
+    {   
+        // return $id;
+        $admin = Admin::where('uuid', $id);
+        $admin->delete();
+        return ['success', "User Account Deleted Successfully"];
     }
 }
