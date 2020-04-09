@@ -12,6 +12,13 @@ use Carbon\Carbon;
 */
 
 Route::get('/', function(){
+    // $date = Carbon::createFromDate(2020, 9, 4);
+    $date = Carbon::createFromTimeString('2020-09-04 12');
+    if(Carbon::now() > $date) {
+        return "todate id";
+    }
+    return $date->format('Y-m-d h:i:s A');
+    // return $now->yesterday();
     return redirect('admin\dashboard');
 });
 // Auth::routes();
@@ -31,7 +38,6 @@ Route::group(['prefix' => 'admin',  'namespace' => 'Admin'], function () {
 
     // Dashboard Conroller goes Here
     Route::get('/dashboard', 'SpectrumAdminDashboardController@index')->name('admin/dashbard');
-    Route::get('/manage-access-keys', 'SpectrumAdminDashboardController@show_access_keys');
 
     Route::get('/audit-logs', 'SpectrumAdminDashboardController@audit_logs');
 
@@ -53,7 +59,14 @@ Route::group(['prefix' => 'admin',  'namespace' => 'Admin'], function () {
         Route::get('/uploaded-books', 'SpectrumBooksController@index');
     
     });
-    
+
+
+    Route::group(['namespace' => 'Developer'], function() {
+        Route::resource('manage-apiaccess-keys', 'DeveloperApikeyController');
+        Route::get('get-apiaccess-keys', 'DeveloperApikeyController@showAll');
+    });
+
+
     Route::group(['prefix' => 'accounts',  'namespace' => 'Account'], function () {
 
         Route::get('/activate-accounts', 'SpectrumAccountController@index');

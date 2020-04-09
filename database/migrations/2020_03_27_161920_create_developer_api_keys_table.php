@@ -15,9 +15,9 @@ class CreateDeveloperApiKeysTable extends Migration
     {
         Schema::create('developer_api_keys', function (Blueprint $table) {
             $table->bigIncrements('id');
-            $table->uuid('duid')->index();
+            $table->uuid('duid')->index()->unique();
             $table->string('key');
-            $table->integer('duration')->unsigned()->comment('In months');
+            $table->integer('duration')->unsigned()->comment('In days');
             $table->softDeletes();
             $table->timestamps();
         });

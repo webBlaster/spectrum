@@ -6,6 +6,17 @@
 
 require('./bootstrap');
 
+require('@fortawesome/fontawesome-free/js/all.js');
+require('bootstrap-table/dist/bootstrap-table.min.css');
+require('bootstrap-table/dist/bootstrap-table.js');
+
+require('tableexport.jquery.plugin');
+require('bootstrap-table/dist/extensions/export/bootstrap-table-export.min.js');
+require('bootstrap-table/dist/extensions/print/bootstrap-table-print.min.js');
+
+require('bootstrap-table/dist/extensions/filter-control/bootstrap-table-filter-control.min.css');
+require('bootstrap-table/dist/extensions/filter-control/bootstrap-table-filter-control.min.js');
+
 import { BootstrapVue, IconsPlugin } from 'bootstrap-vue';
 import 'bootstrap-vue/dist/bootstrap-vue.css';
 import 'bootstrap/dist/css/bootstrap.css';
@@ -81,6 +92,7 @@ Vue.component('flash-error', require('./components/FlashError.vue').default);
 Vue.component('flash-success', require('./components/FlashSuccess.vue').default);
 Vue.component('notify-user', require('./components/NotifyUser.vue').default);
 Vue.component('account-activation', require('./components/AccountActivation.vue').default);
+Vue.component('load-keys', require('./components/LoadKeys.vue').default);
 
 /**
  * Next, we will create a fresh Vue application instance and attach it to

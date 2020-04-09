@@ -86,7 +86,7 @@
                     </a>
                 </div>
                 
-                @if(Auth::guard('admin')->user()->is_super_admin == 1)
+                @if(Auth::guard('admin')->user()->can('isSuperAdmin'))
                     <div class="mdc-list-item mdc-drawer-item">
                         <a class="mdc-drawer-link" href="{{ url('/admin/accounts/activate-accounts') }}">
                             <i class="material-icons mdc-list-item__start-detail mdc-drawer-item-icon"
@@ -95,7 +95,7 @@
                         </a>
                     </div>
                     <div class="mdc-list-item mdc-drawer-item">
-                        <a class="mdc-drawer-link" href="{{ url('/admin/manage-access-keys') }}">
+                        <a class="mdc-drawer-link" href="{{ url('/admin/manage-apiaccess-keys') }}">
                             <i class="material-icons mdc-list-item__start-detail mdc-drawer-item-icon"
                                 aria-hidden="true">code</i>
                             API Access Keys

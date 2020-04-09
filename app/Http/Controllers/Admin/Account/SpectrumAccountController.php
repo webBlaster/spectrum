@@ -5,16 +5,23 @@ namespace App\Http\Controllers\Admin\Account;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use App\Admin;
+
+use Auth;
+use Illuminate\Support\Facades\Gate;
+
 class SpectrumAccountController extends Controller
 {
-    
     public function __construct() {
         $this->middleware('auth.custom');
     }
     
     public function index()
     {
-        return view('accounts.activate-accounts');
+        // $response = Gate::inspect('create');
+        if(Gate::forUser(Auth::guard('admin')->user())->allows('isSuperAdmin')) {
+            return view('accounts.activate-accounts');
+        }
+        return abort(404);
     }
 
     /**
@@ -24,6 +31,7 @@ class SpectrumAccountController extends Controller
      */
     public function create($status)
     {
+        Gate::forUser(Auth::guard('admin')->user())->authorize('isSuperAdmin');
         $user = new Admin();
         if($status == 'activated') {
             $activation_status = $user->fetch_activated_user();
@@ -49,6 +57,7 @@ class SpectrumAccountController extends Controller
 
     public function switch_privilege($id)
     {
+        Gate::forUser(Auth::guard('admin')->user())->authorize('isSuperAdmin');
         if(Admin::where('uuid', $id)->where('status', 1)->where('is_super_admin', 0)->update(['is_super_admin' => 1])){
             return ['success', "User is now a Super Admin"];
         }
@@ -59,6 +68,7 @@ class SpectrumAccountController extends Controller
 
     public function activate_account($id)
     {
+        Gate::forUser(Auth::guard('admin')->user())->authorize('isSuperAdmin');
         if(Admin::where('uuid', $id)->where('status', 0)->update(['status' => 1])){
             return ['success', "Account Activated"];
         }
@@ -81,7 +91,7 @@ class SpectrumAccountController extends Controller
      */
     public function destroy($id)
     {   
-        // return $id;
+        Gate::forUser(Auth::guard('admin')->user())->authorize('isSuperAdmin');
         $admin = Admin::where('uuid', $id);
         $admin->delete();
         return ['success', "User Account Deleted Successfully"];

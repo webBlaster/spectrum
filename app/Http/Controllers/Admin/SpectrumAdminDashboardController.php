@@ -34,7 +34,6 @@ class SpectrumAdminDashboardController extends Controller
     {
         $user = new User();
         $book = new Book();
-
         return view('admin.dashboard', compact('user', 'book'));
     }
 

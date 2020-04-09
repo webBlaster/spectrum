@@ -14,7 +14,7 @@ class AddUuidToAdmins extends Migration
     public function up()
     {
         Schema::table('admins', function (Blueprint $table) {
-            $table->uuid('uuid')->nullable()->after('id');
+            $table->uuid('uuid')->unique()->after('id');
         });
     }
 

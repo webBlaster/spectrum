@@ -25,8 +25,9 @@ class Admin extends Authenticatable
         'name', 'email', 'password', 'uuid',
     ];
 
+    
     protected $dates = ['created_at', 'updated_at'];
-
+    
     /**
      * The attributes that should be hidden for arrays.
      *
@@ -35,24 +36,33 @@ class Admin extends Authenticatable
     protected $hidden = [
         'password', 'remember_token',
     ];
-
+    
     public function getUsernameAttribute($username) {
         return $this->username = ucfirst($username);
     }
     public function getNameAttribute($name) {
         return $this->name = ucwords($name);
     }
+    
+    protected function active_user() { 
+        return Auth::guard('admin')->user(); 
+    }
 
     public function fetch_activated_user() {
-        $exclude_active_user = Auth::guard('admin')->user()->uuid;
-        return $this->where('status', 1)->where('uuid', '<>', $exclude_active_user)->get();
+        return $this->where('status', 1)->where('uuid', '<>', $this->active_user()->uuid)->get();
     }
+
     public function fetch_unactivated_user() {
-        $exclude_active_user = Auth::guard('admin')->user()->uuid;
-        return $this->where('status', 0)->where('uuid', '<>', $exclude_active_user)->get();
+        return $this->where('status', 0)->where('uuid', '<>', $this->active_user()->uuid)->get();
     }
 
     public function getCreatedAtAttribute($date) {
         return Carbon::parse(strtotime($date))->diffForHumans();
+    }
+
+    public function isSuperAdmin() {
+        if($this->is_super_admin === 1 && $this->status === 1) {
+            return true;
+        }
     }
 }

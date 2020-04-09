@@ -44,7 +44,7 @@ export default {
             swal.fire({
                 title: 'Are you sure?',
                 text: 'You are about to make ' + adminName + ' ' + priviledge,
-                icon: 'warning',
+                icon: 'info',
                 showCancelButton: true,
                 confirmButtonColor: '#3085d6',
                 cancelButtonColor: '#d33',
