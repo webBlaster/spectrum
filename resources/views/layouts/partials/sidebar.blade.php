@@ -28,7 +28,7 @@
                     <div class="mdc-expansion-panel" id="ui-sub-menu" style="display: block;">
                       <nav class="mdc-list mdc-drawer-submenu">
                         <div class="mdc-list-item mdc-drawer-item" tabindex="-1">
-                          <a class="mdc-drawer-link" href="" tabindex="-1">
+                          <a class="mdc-drawer-link" href="{{ url('admin/books/create-books') }}" tabindex="-1">
                             <i class="material-icons mdc-list-item__start-detail mdc-drawer-item-icon"
                             aria-hidden="true">cloud_upload</i>
                             Add New Book

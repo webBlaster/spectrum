@@ -13,12 +13,12 @@ use Carbon\Carbon;
 
 Route::get('/', function(){
     // $date = Carbon::createFromDate(2020, 9, 4);
-    $date = Carbon::createFromTimeString('2020-09-04 12');
-    if(Carbon::now() > $date) {
-        return "todate id";
-    }
-    return $date->format('Y-m-d h:i:s A');
-    // return $now->yesterday();
+    // $date = Carbon::createFromTimeString('2020-09-04 12');
+    // if(Carbon::now() > $date) {
+    //     return "todate id";
+    // }
+    // return $date->format('Y-m-d h:i:s A');
+    // // return $now->yesterday();
     return redirect('admin\dashboard');
 });
 // Auth::routes();
@@ -57,12 +57,14 @@ Route::group(['prefix' => 'admin',  'namespace' => 'Admin'], function () {
     Route::group(['prefix' => 'books', 'namespace' => 'Books'], function() {
     
         Route::get('/uploaded-books', 'SpectrumBooksController@index');
+        Route::get('/create-books', 'SpectrumBooksController@create');
     
     });
 
 
     Route::group(['namespace' => 'Developer'], function() {
         Route::resource('manage-apiaccess-keys', 'DeveloperApikeyController');
+        Route::get('view-apiaccess-key', 'DeveloperApikeyController@showKey');
         Route::get('get-apiaccess-keys', 'DeveloperApikeyController@showAll');
     });
 

@@ -25,6 +25,17 @@ class DeveloperApiKeyController extends Controller
         Gate::forUser(Auth::guard('admin')->user())->authorize('isSuperAdmin');
         return DeveloperApiKeysCollection::collection(DeveloperApiKey::orderBy('created_at', 'desc')->get());
     }
+
+    public function showKey()
+    {
+        if($key = \Request::get('i')) {
+            $accessKey = DeveloperApiKey::where('duid', $key)->first();
+            return view('admin.print_key', compact('accessKey'));
+        }
+        return redirect()->back();
+    }
+
+
     public function index()
     {
         if(Gate::forUser(Auth::guard('admin')->user())->allows('isSuperAdmin')) {
@@ -99,8 +110,11 @@ class DeveloperApiKeyController extends Controller
      */
     public function show($id)
     {
-        //
+
+        
     }
+
+    
 
     /**
      * Show the form for editing the specified resource.

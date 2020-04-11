@@ -28,6 +28,8 @@
         "bootstrap-table": "^1.15.5",
         "bootstrap-vue": "^2.10.1",
         "cross-env": "^6.0.3",
+        "jspdf": "^1.5.3",
+        "jspdf-html2canvas": "^1.1.0",
         "laravel-vue-pagination": "^2.3.1",
         "moment": "^2.24.0",
         "node-sass": "^4.13.1",
@@ -35,6 +37,7 @@
         "tableexport.jquery.plugin": "^1.10.10",
         "vform": "^1.0.1",
         "vue-progressbar": "^0.7.5",
-        "vue-router": "^3.1.5"
+        "vue-router": "^3.1.5",
+        "vue-toastr": "^2.0.14"
     }
 }

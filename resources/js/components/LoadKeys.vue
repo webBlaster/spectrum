@@ -30,7 +30,7 @@
                                 </div><has-error :form="form" field="valid_till"></has-error>
                             </div>
                             <div class="form-group">
-                                <button class="btn btn-disabled" @click.prevent="">{{form.key}}</button>
+                                <button class="btn btn-disabled" @click.prevent="" disabled>{{form.key}}</button>
                             </div>
                             
                         </div>
@@ -109,7 +109,7 @@
                         events: {
                             'click .show': function (e, value, row){
                                 
-                                return window.location.assign('/manage-apiaccess-keys/'+row.id)
+                                return window.location.assign('/admin/view-apiaccess-key?i='+row.duid)
                             },
                             'click .edit': ((e, value, row) => {
                                 this.editModal(row);

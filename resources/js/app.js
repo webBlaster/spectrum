@@ -24,7 +24,10 @@ import VueProgressBar from 'vue-progressbar';
 import moment from 'moment';
 import { Form, HasError, AlertError } from 'vform';
 import swal from 'sweetalert2';
+import Toastr from 'vue-toastr';
 
+const html2PDF = require('jspdf-html2canvas');
+window.html2PDF = html2PDF;
 
 window.Vue = require('vue');
 window.Form = Form;
@@ -37,6 +40,8 @@ Vue.use(IconsPlugin);
 Vue.config.productionTip = false;
 
 
+
+Vue.use(Toastr);
 
 window.events = new Vue();
 window.flash = function(message) {
@@ -93,6 +98,12 @@ Vue.component('flash-success', require('./components/FlashSuccess.vue').default)
 Vue.component('notify-user', require('./components/NotifyUser.vue').default);
 Vue.component('account-activation', require('./components/AccountActivation.vue').default);
 Vue.component('load-keys', require('./components/LoadKeys.vue').default);
+Vue.component('print-key', require('./components/PrintKey.vue').default);
+Vue.component('file-upload', require('./components/FileUpload.vue').default);
+
+
+
+Vue.component('image-upload', require('./components/FormUpload').default);
 
 /**
  * Next, we will create a fresh Vue application instance and attach it to

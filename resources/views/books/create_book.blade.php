@@ -56,18 +56,26 @@
                       </div>
                     </div>
                     <div  class="mdc-layout-grid__cell stretch-card mdc-layout-grid__cell--span-6-desktop">
-                                                                  <div><label for="file-input" class=" form-control-label">Upload Book</label> &nbsp; &nbsp;
-                                                                  <input type="file" id="file-input" name="file-input" class="form-control-file"></div>
-                                                              </div>
-
+                        <div><label for="file-input" class=" form-control-label">Upload Book</label> &nbsp; &nbsp;
+                        <input type="file" id="file-input" name="file-input" class="form-control-file"></div>
+                    </div>
                   </div>
                   <button class="mdc-button mdc-button--raised filled-button--info">
                     Create
                   </button>
                 </div>
               </div>
+
+             
             </div>
           </div>
+        </div>
+        <div class="mdc-card">
+          <div  class="mdc-layout-grid__cell stretch-card mdc-layout-grid__cell--span-12-desktop">
+            <file-upload></file-upload>
+          </div>
+
+          <image-upload></image-upload>
         </div>
     </main>      
     @endsection
