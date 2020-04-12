@@ -10,12 +10,15 @@ use Illuminate\Support\Str;
 
 class SpectrumBooksController extends Controller
 {
-    public function __construct() {
+    public function __construct()
+    {
         return $this->middleware('auth.custom');
     }
     public function index()
     {
-        return view('books.uploaded-books');
+        $books = Book::all();
+
+        return view('books.uploaded-books', ["books" => $books]);
     }
 
     /**
@@ -42,13 +45,13 @@ class SpectrumBooksController extends Controller
 
         $images = $this->uploadFiles($request);
 
-        foreach($images as $imageFile) {
+        foreach ($images as $imageFile) {
             list($fileName, $title) = $imageFile;
             $image = new Book();
             $image->title = $title;
             $image->file_name = $fileName;
             $image->save();
-        }       
+        }
 
         return redirect('/')->with('message', "Your Image Was Successfully Uploaded");
     }
@@ -58,24 +61,25 @@ class SpectrumBooksController extends Controller
         $uploadImages = [];
         if ($request->hasFile('file_name')) {
             $images = $request->file('file_name');
-            foreach($images as $image) {
+            foreach ($images as $image) {
                 $uploadImages = $this->uploadFile($image);
             }
         }
 
         return $uploadImages;
     }
-    protected function uploadFile($image) {
-            
+    protected function uploadFile($image)
+    {
+
         $originalFileName = $image->getClientOriginalName();
         $extension = $image->getClientOriginalExtension();
         $fileNameOnly = pathinfo($originalFileName, PATHINFO_FILENAME);
         $fileName = Str::slug($fileNameOnly) . "-" . time() . "." . $extension;
         $uploadedFileName = $image->storeAs('public', $fileName);
-    
+
         return [$uploadedFileName, $fileNameOnly];
-            // during call back, you can use a getter and say
-            // retun Storage::url($this->file_name)
+        // during call back, you can use a getter and say
+        // retun Storage::url($this->file_name)
     }
 
     /**
@@ -84,7 +88,7 @@ class SpectrumBooksController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    
+
     /**
      * Show the form for editing the specified resource.
      *

@@ -1,4 +1,5 @@
 <?php
+
 use Carbon\Carbon;
 /*
 |--------------------------------------------------------------------------
@@ -11,7 +12,7 @@ use Carbon\Carbon;
 |
 */
 
-Route::get('/', function(){
+Route::get('/', function () {
     // $date = Carbon::createFromDate(2020, 9, 4);
     // $date = Carbon::createFromTimeString('2020-09-04 12');
     // if(Carbon::now() > $date) {
@@ -32,7 +33,7 @@ Route::group(['prefix' => 'admin',  'namespace' => 'Admin'], function () {
         Route::get('/login', 'SpectrumAdminAuthController@show_login_page')->name('admin/login');
         Route::post('/login', 'SpectrumAdminAuthController@login');
 
-        
+
         Route::post('/logout', 'SpectrumAdminAuthController@logout')->name('admin.logout');
     });
 
@@ -45,24 +46,23 @@ Route::group(['prefix' => 'admin',  'namespace' => 'Admin'], function () {
     Route::resource('/notification', 'AdminNotificationController');
 
     // License Controller Goes Here
-    Route::group(['prefix' => 'licenses', 'namespace' => 'License'], function() {
+    Route::group(['prefix' => 'licenses', 'namespace' => 'License'], function () {
         Route::get('/user-licenses', 'SpectrumLicenseController@index');
         Route::get('/single-licenses', 'SpectrumLicenseController@index');
         Route::get('/group-licenses', 'SpectrumLicenseController@index');
         Route::get('/generated-licenses', 'SpectrumLicenseController@create');
         Route::get('/accounting-module', 'SpectrumLicenseController@view_Accounts');
-    
     });
-    
-    Route::group(['prefix' => 'books', 'namespace' => 'Books'], function() {
-    
+
+    Route::group(['prefix' => 'books', 'namespace' => 'Books'], function () {
+
         Route::get('/uploaded-books', 'SpectrumBooksController@index');
         Route::get('/create-books', 'SpectrumBooksController@create');
-    
+        Route::post('/create-books', 'SpectrumBooksController@store');
     });
 
 
-    Route::group(['namespace' => 'Developer'], function() {
+    Route::group(['namespace' => 'Developer'], function () {
         Route::resource('manage-apiaccess-keys', 'DeveloperApikeyController');
         Route::get('view-apiaccess-key', 'DeveloperApikeyController@showKey');
         Route::get('get-apiaccess-keys', 'DeveloperApikeyController@showAll');
@@ -76,9 +76,5 @@ Route::group(['prefix' => 'admin',  'namespace' => 'Admin'], function () {
         Route::delete('/delete-account/{id}', 'SpectrumAccountController@destroy');
         Route::put('/activate-account/{id}', 'SpectrumAccountController@activate_account');
         Route::put('/alter-priviledge/{id}', 'SpectrumAccountController@switch_privilege');
-
     });
 });
-
-
-
