@@ -27,6 +27,6 @@ Route::group(['prefix' => 'admin',  'namespace' => 'Admin'], function () {
     Route::get('/login', 'SpectrumAdminController@show_login_page')->name('admin/login');
     Route::post('/login', 'SpectrumAdminController@login');
 
-    Route::middleware('auth:admin')->get('/dashboard', 'SpectrumAdminController@index')->name('admin/dashbard');
+    Route::get('/dashboard', 'SpectrumAdminController@index')->name('admin/dashbard');
 
 });

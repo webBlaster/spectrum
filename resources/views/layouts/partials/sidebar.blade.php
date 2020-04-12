@@ -2,7 +2,7 @@
     <aside class="mdc-drawer mdc-drawer--dismissible mdc-drawer--open">
         <div class="mdc-drawer__header">
           <a href="index.html" class="brand-logo">
-  <img src="{{asset('images/Spectrum_logo.png')}}" alt="logo"><h3 style="color: white;">SPECTRUM BOOKS</h3>
+  <img src="images/sp-book.png" alt="logo"><h3 style="color: white;">SPECTRUM BOOKS</h3>
           </a>
         </div>
         <div class="mdc-drawer__content">

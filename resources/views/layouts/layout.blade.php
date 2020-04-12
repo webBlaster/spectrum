@@ -2,7 +2,6 @@
 <html lang="{{ str_replace('_', '-', app()->getLocale()) }}">
 <head>
   <meta charset="UTF-8">
-  <meta name="csrf-token" content="{{ csrf_token() }}">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <meta http-equiv="X-UA-Compatible" content="ie=edge">
   
@@ -22,7 +21,7 @@
   <!-- Layout styles -->
   <link rel="stylesheet" href="{{ asset('css/demo/style.css')}}">
   <!-- End layout styles -->
-  <link rel="shortcut icon" href="{{ asset('images/Spectrum_logo.png')}}" />
+  <link rel="shortcut icon" href="{{ asset('images/Spectrum logo.png')}}" />
 </head>
 <body>
 <script src="{{ asset('js/preloader.js')}}"></script>
@@ -35,7 +34,7 @@
       <!-- dashboard -->
 
       <div class="page-wrapper mdc-toolbar-fixed-adjust">
-      
+       
         <!-- Sidebar -->
         @include('layouts.partials.sidebar')
         <div class="main-wrapper mdc-drawer-app-content">
