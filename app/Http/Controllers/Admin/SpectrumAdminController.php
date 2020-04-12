@@ -155,7 +155,7 @@ class SpectrumAdminController extends Controller
                 ->withInput()
                 ->with('fail','Your account has not been activated yet.!');
 
-            }else {
+            } else {
                 $request->session()->regenerate();
                 return $this->authenticated($request, Auth::guard('admin')->user())
                 ?: redirect('admin/dashboard');
@@ -169,17 +169,5 @@ class SpectrumAdminController extends Controller
     protected function authenticated(Request $request, $user)
     {
         //
-    }
-
-
-    public function logout(Request $request)
-    {
-        Auth::guard('admin')->logout();
-
-        $request->session()->invalidate();
-
-        $request->session()->regenerateToken();
-
-        return redirect('admin/login');
     }
 }

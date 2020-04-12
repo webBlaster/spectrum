@@ -29,11 +29,4 @@ class Admin extends Authenticatable
     protected $hidden = [
         'password', 'remember_token',
     ];
-
-    public function getUsernameAttribute($username) {
-        return $this->username = ucfirst($username);
-    }
-    public function getNameAttribute($name) {
-        return $this->name = ucwords($name);
-    }
 }

@@ -15,7 +15,7 @@ Route::get('/', function () {
     return view('welcome');
 });
 
-// Auth::routes();
+Auth::routes();
 
 Route::get('/home', 'HomeController@index')->name('home');
 
@@ -26,8 +26,7 @@ Route::group(['prefix' => 'admin',  'namespace' => 'Admin'], function () {
 
     Route::get('/login', 'SpectrumAdminController@show_login_page')->name('admin/login');
     Route::post('/login', 'SpectrumAdminController@login');
-    Route::post('/logout', 'SpectrumAdminController@logout')->name('admin.logout');
 
-    Route::middleware(['auth.custom'])->get('/dashboard', 'SpectrumAdminController@index')->name('admin/dashbard');
+    Route::middleware('auth:admin')->get('/dashboard', 'SpectrumAdminController@index')->name('admin/dashbard');
 
 });

@@ -3,7 +3,7 @@
     <div class="mdc-top-app-bar__row">
       <div class="mdc-top-app-bar__section mdc-top-app-bar__section--align-start">
         <button class="material-icons mdc-top-app-bar__navigation-icon mdc-icon-button sidebar-toggler">menu</button>
-        <span class="mdc-top-app-bar__title">Greetings {{Auth::guard('admin')->user()->name}}</span>
+        <span class="mdc-top-app-bar__title">Greetings Feyi!</span>
         <div class="mdc-text-field mdc-text-field--outlined mdc-text-field--with-leading-icon search-text-field d-none d-md-flex">
           <i class="material-icons mdc-text-field__icon">search</i>
           <input class="mdc-text-field__input" id="text-field-hero-input">
@@ -18,14 +18,17 @@
       </div>
       <div class="mdc-top-app-bar__section mdc-top-app-bar__section--align-end mdc-top-app-bar__section-right">
         <div class="menu-button-container menu-profile d-none d-md-block">
-          <button class="mdc-button mdc-menu-button mdc-ripple-upgraded" style="--mdc-ripple-fg-size:55px; --mdc-ripple-fg-scale:1.9772027087642263; --mdc-ripple-fg-translate-start:42.449951171875px, -7.5px; --mdc-ripple-fg-translate-end:18.474998474121094px, -9.5px;">
+          <button class="mdc-button mdc-menu-button">
             <span class="d-flex align-items-center">
-              <span class="user-name">{{Auth::guard('admin')->user()->username}}</span>
+              <span class="figure">
+                <img src="images/faces/face1.jpg" alt="user" class="user">
+              </span>
+              <span class="user-name">Feyi</span>
             </span>
           </button>
-          <div class="mdc-menu mdc-menu-surface" tabindex="-1" style="transform-origin: left top 0px; left: 0px; top: 36px; max-height: 605px;">
+          <div class="mdc-menu mdc-menu-surface" tabindex="-1">
             <ul class="mdc-list" role="menu" aria-hidden="true" aria-orientation="vertical">
-              <li class="mdc-list-item" role="menuitem" tabindex="-1">
+              <li class="mdc-list-item" role="menuitem">
                 <div class="item-thumbnail item-thumbnail-icon-only">
                   <i class="mdi mdi-account-edit-outline text-primary"></i>
                 </div>
@@ -33,7 +36,7 @@
                   <h6 class="item-subject font-weight-normal">Edit profile</h6>
                 </div>
               </li>
-              <li class="mdc-list-item" role="menuitem" tabindex="-1">
+              <li class="mdc-list-item" role="menuitem">
                 <div class="item-thumbnail item-thumbnail-icon-only">
                   <i class="mdi mdi-settings-outline text-primary"></i>                      
                 </div>
