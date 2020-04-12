@@ -23,7 +23,7 @@ class SpectrumApiController extends Controller
         $this->middleware('auth:api')->only('update');
         $this->middleware('ApiKey');
     }
-    public function index($apiKey)
+    public function index()
     {
         return $this->success('You have successfully reached the spectrum API endpoint');
     }
