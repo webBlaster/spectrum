@@ -41,6 +41,15 @@
                                 Uploaded Books
                             </a>
                         </div>
+                        @if(Auth::guard('admin')->user()->can('isSuperAdmin'))
+                        <div class="mdc-list-item mdc-drawer-item">
+                            <a class="mdc-drawer-link" href="{{ url('admin/books/deleted-books') }}">
+                                <i class="material-icons mdc-list-item__start-detail mdc-drawer-item-icon"
+                                    aria-hidden="true">delete</i>
+                                Deleted Books
+                            </a>
+                        </div>
+                        @endif
                       </nav>
                     </div>
                 </div>
@@ -85,7 +94,7 @@
                         Generated Licenses
                     </a>
                 </div>
-                
+
                 @if(Auth::guard('admin')->user()->can('isSuperAdmin'))
                     <div class="mdc-list-item mdc-drawer-item">
                         <a class="mdc-drawer-link" href="{{ url('/admin/accounts/activate-accounts') }}">
