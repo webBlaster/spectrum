@@ -5,48 +5,40 @@
     <div class="mdc-layout-grid__cell stretch-card mdc-layout-grid__cell--span-12">
         <div class="mdc-card p-0">
             <h6 class="card-title card-padding pb-0">Uploaded Books </h6>
-            @isset($books)
             <div class="table-responsive">
                 <table class="table table-hoverable">
                     <thead>
                         <tr>
-                            <th>SN</th>
                             <th class="text-left">Book Name</th>
                             <th>Book Author</th>
+                            <th>Book Description</th>
                             <th>Book Publisher</th>
                             <th>Date Published</th>
                             <th>Action</th>
                         </tr>
                     </thead>
                     <tbody>
-                        @php($count = 0)
                         @foreach ($books as $book)
-                        @php(++$count)
                         <tr>
-                            <td>{{ $count }}</td>
                             <td class="text-left">{{ $book->title }}</td>
                             <td>{{ $book->author }}</td>
+                            <td>{{ $book->description }}</td>
                             <td>{{ $book->publisher }}</td>
-                            <td>{{ date('Y-m-d', strtotime($book->date_published)) }}</td>
+                            <td>{{ date('Y-m-d', $book->date_published) }}</td>
                             <td>
-                                <a href="{{ url('admin/books/view-book/'.$book->id) }}" class="mdc-button mdc-button--raised icon-button filled-button--primary">
-                                    <i class="material-icons mdc-button__icon">visibility</i>
-                                </a>&nbsp;
-                                <a href="{{ url('admin/books/delete-book/'.$book->id) }}" class="mdc-button mdc-button--raised icon-button filled-button--secondary">
+                                <button class="mdc-button mdc-button--raised icon-button filled-button--secondary">
                                     <i class="material-icons mdc-button__icon">delete</i>
-                                </a>&nbsp;
-                                <a href="{{ url('admin/books/edit-book/'.$book->id) }}" class="mdc-button mdc-button--raised icon-button filled-button--success">
+                                </button>&nbsp;
+                                <button class="mdc-button mdc-button--raised icon-button filled-button--success">
                                     <i class="material-icons mdc-button__icon">colorize</i>
-                                </a>
+                                </button>
                             </td>
+
                         </tr>
                         @endforeach
                     </tbody>
                 </table>
             </div>
-            @else
-            <p class="text-center">No Uploaded Books Yet.</p>
-            @endisset
         </div>
     </div>
 </main>

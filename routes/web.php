@@ -57,20 +57,8 @@ Route::group(['prefix' => 'admin',  'namespace' => 'Admin'], function () {
     Route::group(['prefix' => 'books', 'namespace' => 'Books'], function () {
 
         Route::get('/uploaded-books', 'SpectrumBooksController@index');
-
         Route::get('/create-books', 'SpectrumBooksController@create');
-        Route::post('/create-books', 'SpectrumBooksController@store')->name('books/create-books');
-
-        Route::get('/view-book/{id}', 'SpectrumBooksController@show');
-
-        Route::get('/edit-book/{id}', 'SpectrumBooksController@edit');
-        Route::put('edit-book/{id}', 'SpectrumBooksController@update')->name('books/edit-book');
-
-        Route::get('/delete-book/{id}', 'SpectrumBooksController@destroy');
-
-        Route::get('/deleted-books', 'SpectrumBooksController@show_trashed');
-
-        Route::get('/restore-book/{id}', 'SpectrumBooksController@restore');
+        Route::post('/create-books', 'SpectrumBooksController@store');
     });
 
 
