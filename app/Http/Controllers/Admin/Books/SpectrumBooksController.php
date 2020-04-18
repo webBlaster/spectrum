@@ -7,6 +7,9 @@ use App\DeveloperApiKey;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use Illuminate\Support\Str;
+use Storage;
+use Illuminate\Database\Eloquent\SoftDeletes;
+use Auth;
 
 class SpectrumBooksController extends Controller
 {
@@ -18,7 +21,7 @@ class SpectrumBooksController extends Controller
     {
         $books = Book::all();
 
-        return view('books.uploaded-books', ["books" => $books]);
+        return view('books.uploaded-books', ['books' => $books]);
     }
 
     /**
@@ -40,21 +43,34 @@ class SpectrumBooksController extends Controller
     public function store(Request $request)
     {
         $request->validate([
-            'file_name.*' => 'image|mimes:jpg, jpeg, png, gif, bmp',
+            'title' => 'required|unique:books',
+            'author' => 'required',
+            'publisher' => 'required',
+            'description' => 'required',
+            'date_published' => 'required|date|before_or_equal:' . date('Y-m-d')
+            // 'front_cover' => 'required|mimes:jpg, jpeg, png, gif, bmp',
+            // 'book' => 'required|file|mimes:pdf,html,epub,ocr,docx,doc'
         ]);
 
-        $images = $this->uploadFiles($request);
+        $book = new Book();
+        $book->title = $request->title;
+        $book->author = $request->author;
+        $book->description = $request->description;
+        $book->publisher = $request->publisher;
+        $book->date_published = $request->date_published;
 
-        foreach ($images as $imageFile) {
-            list($fileName, $title) = $imageFile;
-            $image = new Book();
-            $image->title = $title;
-            $image->file_name = $fileName;
-            $image->save();
-        }
+        $book->front_cover = $request
+            ->file('front_cover')
+            ->store('public/books/front-covers');
 
-        return redirect('/')->with('message', "Your Image Was Successfully Uploaded");
-    }
+        $book->path = $request
+            ->file('book')
+            ->storeAs(
+                'public/books',
+                $request->title .
+                    '.' .
+                    $request->book->getClientOriginalExtension()
+            );
 
     protected function uploadFiles($request)
     {
@@ -88,6 +104,12 @@ class SpectrumBooksController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
+    public function show($id)
+    {
+        $book = Book::findOrFail($id);
+
+        return view('books.view-book', ['book' => $book]);
+    }
 
     /**
      * Show the form for editing the specified resource.
@@ -97,7 +119,9 @@ class SpectrumBooksController extends Controller
      */
     public function edit($id)
     {
-        //
+        $book = Book::findOrFail($id);
+
+        return view('books.edit-book', ['book' => $book]);
     }
 
     /**
@@ -118,8 +142,26 @@ class SpectrumBooksController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function destroy($id)
+    public function destroy(Request $request, $id)
     {
         //
+    }
+
+    public function show_trashed(Request $request)
+    {
+        $books = Book::onlyTrashed()->get();
+        // dd($books);
+        return view('books.deleted-books', ['books' => $books]);
+    }
+
+    public function restore($id)
+    {
+        $book = Book::withTrashed($id);
+        $book->restore();
+
+        return redirect('admin/books/deleted-books')->with(
+            'success',
+            'Book Successfully Restored.'
+        );
     }
 }
