@@ -9,6 +9,7 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Str;
 use Storage;
 use Illuminate\Database\Eloquent\SoftDeletes;
+use Auth;
 
 class SpectrumBooksController extends Controller
 {
@@ -71,16 +72,30 @@ class SpectrumBooksController extends Controller
                     $request->book->getClientOriginalExtension()
             );
 
-        if ($book->save()) {
-            return redirect('admin/books/create-books')->with(
-                'success',
-                'New Book Was Successfully Saved'
-            );
-        } else {
-            return redirect('admin/books/create-books')
-                ->with('fail', 'Error Saving Book')
-                ->withInput();
+    protected function uploadFiles($request)
+    {
+        $uploadImages = [];
+        if ($request->hasFile('file_name')) {
+            $images = $request->file('file_name');
+            foreach ($images as $image) {
+                $uploadImages = $this->uploadFile($image);
+            }
         }
+
+        return $uploadImages;
+    }
+    protected function uploadFile($image)
+    {
+
+        $originalFileName = $image->getClientOriginalName();
+        $extension = $image->getClientOriginalExtension();
+        $fileNameOnly = pathinfo($originalFileName, PATHINFO_FILENAME);
+        $fileName = Str::slug($fileNameOnly) . "-" . time() . "." . $extension;
+        $uploadedFileName = $image->storeAs('public', $fileName);
+
+        return [$uploadedFileName, $fileNameOnly];
+        // during call back, you can use a getter and say
+        // retun Storage::url($this->file_name)
     }
 
     /**
@@ -118,55 +133,7 @@ class SpectrumBooksController extends Controller
      */
     public function update(Request $request, $id)
     {
-        $book = Book::findOrFail($id);
-
-        $request->validate([
-            'title' => 'required',
-            'author' => 'required',
-            'publisher' => 'required',
-            'description' => 'required',
-            'date_published' =>
-                'required|date|before_or_equal:' . date('Y-m-d'),
-            // 'front_cover' => 'mimes:jpg, jpeg, png, gif, bmp',
-            // 'book' => 'mimes:pdf,html,epub,ocr,docx,doc'
-        ]);
-
-        $book->title = $request->title;
-        $book->author = $request->author;
-        $book->publisher = $request->publisher;
-        $book->description = $request->description;
-        $book->date_published = $request->date_published;
-
-        if ($request->hasFile('front_cover')) {
-            Storage::delete($book->front_cover);
-
-            $book->front_cover = $request
-                ->file('front_cover')
-                ->store('public/books/front-covers');
-        }
-
-        if ($request->hasFile('book')) {
-            Storage::delete($book->path);
-            $book->path = $request
-                ->file('book')
-                ->storeAs(
-                    'public/books',
-                    $request->title .
-                        '.' .
-                        $request->book->getClientOriginalExtension()
-                );
-        }
-
-        if ($book->save()) {
-            return redirect()->back()->with(
-                'success',
-                'Book Successfully Edited'
-            );
-        } else {
-            return redirect()->back()
-                ->with('fail', 'Error Edited Book')
-                ->withInput();
-        }
+        //
     }
 
     /**
@@ -175,15 +142,9 @@ class SpectrumBooksController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function destroy($id)
+    public function destroy(Request $request, $id)
     {
-        $book = Book::findOrFail($id);
-        $book->delete();
-
-        return redirect('admin/books/uploaded-books')->with(
-            'success',
-            'Book Deletion Successful.'
-        );
+        //
     }
 
     public function show_trashed(Request $request)
