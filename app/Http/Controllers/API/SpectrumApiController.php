@@ -14,6 +14,7 @@ use App\BlacklistedImei;
 use App\AccessCode;
 use App\Book;
 use BadMethodCallException;
+use Carbon\Carbon;
 use Illuminate\Http\Request;
 
 class SpectrumApiController extends Controller
@@ -116,8 +117,14 @@ class SpectrumApiController extends Controller
                 } else {
                     $usageCount = User::where('access_code', '=', $request->access_code)->count();
                     if($usageCount < $confirmAccessCode->max_number_of_users) {
+
                         // Checking if access code has not expired
-                        if($confirmAccessCode->duration > 0) {
+                        $present = Carbon::now();
+                        if($confirmAccessCode->expires == '') {
+                            $expires = $present->addMonths($confirmAccessCode->duration);
+                            $confirmAccessCode->update(['expires' => $expires]);
+                        }
+                        if($confirmAccessCode->expires > $present) {
                             $user->update([
                                 'first_name' => $request->first_name,
                                 'last_name' => $request->last_name,

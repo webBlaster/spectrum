@@ -14,4 +14,8 @@ class Book extends Model
     public function book_count() {
         return $this->all()->count();
     }
+
+    public function access_codes() {
+        return $this->belongsToMany(AccessCode::class, 'book_access_code', 'access_code_uuid', 'book_id', 'uuid')->withPivot('created_at', '');
+    }
 }

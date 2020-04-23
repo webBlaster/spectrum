@@ -26,11 +26,16 @@ class DeveloperApiKeyController extends Controller
         return DeveloperApiKeysCollection::collection(DeveloperApiKey::orderBy('created_at', 'desc')->get());
     }
 
-    public function showKey()
+    public function showKey(Request $request)
     {
         if($key = \Request::get('i')) {
             $accessKey = DeveloperApiKey::where('duid', $key)->first();
-            return view('admin.print_key', compact('accessKey'));
+            if($request->expectsJson()) {
+                return response()->json($accessKey);
+            }
+            if($accessKey) {
+                return view('admin.print_key', compact('key'));
+            }
         }
         return redirect()->back();
     }

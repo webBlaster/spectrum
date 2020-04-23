@@ -81,6 +81,7 @@ Vue.use(VueProgressBar, options);
 window.Fire = new Vue();
 
 Vue.filter('humanDate', (date) => moment(date).fromNow());
+Vue.filter('fullDate', (date) => moment(date).format("dddd, MMMM Do YYYY, h:mm:ss a"));
 
 /**
  * The following block of code may be used to automatically register your
@@ -100,6 +101,11 @@ Vue.component('account-activation', require('./components/AccountActivation.vue'
 Vue.component('load-keys', require('./components/LoadKeys.vue').default);
 Vue.component('print-key', require('./components/PrintKey.vue').default);
 Vue.component('file-upload', require('./components/FileUpload.vue').default);
+Vue.component('license-generator', require('./components/LicenseGenerator.vue').default);
+Vue.component('all-licenses', require('./components/AllLicenses.vue').default);
+Vue.component('used-licenses', require('./components/UsedLicenses.vue').default);
+Vue.component('thrashed-licenses', require('./components/ThrashedLicense.vue').default);
+Vue.component('edit-license', require('./components/EditLicense.vue').default);
 
 
 
@@ -113,5 +119,11 @@ Vue.component('image-upload', require('./components/FormUpload').default);
 
 const app = new Vue({
     el: '#app',
+    data: {
+        
+    },
+    methods: {
+        
+    }
 });
 

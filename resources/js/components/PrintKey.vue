@@ -1,83 +1,53 @@
 <template>
-    <div id="invoice" ref="content">
-        <div class="toolbar hidden-print">
-            <div class="text-right">
-                <button id="printInvoice" class="btn btn-info"><i class="fa fa-print"></i> Print</button>
-                <button id="ignorePDF" class="btn btn-info" @click="printWithStyle"><i class="fa fa-file-pdf-o"></i> Download as PDF</button>
+    <div>
+        <div id="invoice" ref="content" class="col-md-6 m-auto">
+            <div class="toolbar hidden-print">
+                <div class="text-right">
+                    <button id="printInvoice" class="btn btn-info" onclick="window.print()"><i class="fa fa-print"></i> Print</button>
+                    <button id="ignorePDF" class="btn btn-info" @click="printWithStyle"><i class="fa fa-file-pdf-o"></i> Download as PDF</button>
+                </div>
+                <hr>
             </div>
-            <hr>
-        </div>
-        <div class="invoice overflow-auto">
-            <div style="min-width: 600px">
-                <main>
-                    <div class="row contacts">
-                        <div class="col invoice-details" v-for="seeKey in mykey" :key="seeKey.id">
-                            <h1 class="invoice-id">{{seeKey.key}}</h1>
-                            <div class="date">{{seeKey.valid_from}}</div>
-                            <div class="date">{{seeKey.valid_till}}</div>
+            <div class="invoice overflow-auto">
+                <div>
+                    <main>
+                        <div class="row contacts">
+                            <div class="col invoice-details" >
+                                <h5 class="invoice-id">Spectrum E-Library API Access Key</h5>
+                                <div class="date">Company Address</div>
+                                <div class="date">Contact Address</div>
+                            </div>
                         </div>
-                    </div>
-                    <table border="0" cellspacing="0" cellpadding="0">
-                        <thead>
-                            <tr>
-                                <th>#</th>
-                                <th class="text-left">DESCRIPTION</th>
-                                <th class="text-right">HOUR PRICE</th>
-                                <th class="text-right">HOURS</th>
-                                <th class="text-right">TOTAL</th>
-                            </tr>
-                        </thead>
-                        <tbody>
-                            <tr>
-                                <td class="no">04</td>
-                                <td class="text-left"><h3>
-                                    <a target="_blank" href="https://www.youtube.com/channel/UC_UMEcP_kF0z4E6KbxCpV1w">
-                                    Youtube channel
-                                    </a>
-                                    </h3>
-                                    <a target="_blank" href="https://www.youtube.com/channel/UC_UMEcP_kF0z4E6KbxCpV1w">
-                                        Useful videos
-                                    </a> 
-                                    to improve your Javascript skills. Subscribe and stay tuned :)
-                                </td>
-                                <td class="unit">$0.00</td>
-                                <td class="qty">100</td>
-                                <td class="total">$0.00</td>
-                            </tr>
-                            <tr>
-                                <td class="no">01</td>
-                                <td class="text-left"><h3>Website Design</h3>Creating a recognizable design solution based on the company's existing visual identity</td>
-                                <td class="unit">$40.00</td>
-                                <td class="qty">30</td>
-                                <td class="total">$1,200.00</td>
-                            </tr>
-                            <tr>
-                                <td class="no">02</td>
-                                <td class="text-left"><h3>Website Development</h3>Developing a Content Management System-based Website</td>
-                                <td class="unit">$40.00</td>
-                                <td class="qty">80</td>
-                                <td class="total">$3,200.00</td>
-                            </tr>
-                            <tr>
-                                <td class="no">03</td>
-                                <td class="text-left"><h3>Search Engines Optimization</h3>Optimize the site for search engines (SEO)</td>
-                                <td class="unit">$40.00</td>
-                                <td class="qty">20</td>
-                                <td class="total">$800.00</td>
-                            </tr>
-                        </tbody>
-                    </table>
-                    <div class="notices">
-                        <div>NOTICE:</div>
-                        <div class="notice">Note: The Apikey will become inactive after its expiration date and the API resources will become inaccessible</div>
-                    </div>
-                </main>
-                <footer>
-                    Please Keep the APIKEY safe
-                </footer>
+                        <table border="0" cellspacing="0" cellpadding="0">
+                            <tbody>
+                                <tr>
+                                    <td class="no text-center">KEY</td>
+                                    <td class="text-left">
+                                        <h3>{{key_details.key}}</h3>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td class="">Valids From: </td>
+                                    <td class="">{{key_details.valid_from | fullDate}}</td>
+                                </tr>
+                                <tr>
+                                    <td class="">Expires on: </td>
+                                    <td class="">{{key_details.valid_till | fullDate}}</td>
+                                </tr>
+                            </tbody>
+                        </table>
+                        <div class="notices">
+                            <div>NOTICE:</div>
+                            <div class="notice">Note: The Apikey will become inactive after <span class="text-secondary">{{key_details.valid_till | fullDate}}</span> and the API resources will become inaccessible</div>
+                        </div>
+                    </main>
+                    <footer>
+                        Please Keep the APIKEY safe
+                    </footer>
+                </div>
+                <!--DO NOT DELETE THIS div. IT is responsible for showing footer always at the bottom-->
+                <div></div>
             </div>
-            <!--DO NOT DELETE THIS div. IT is responsible for showing footer always at the bottom-->
-            <div></div>
         </div>
     </div>
 </template>
@@ -86,43 +56,13 @@
 import * as jspdf from 'jspdf';
 import html2canvas from 'html2canvas';
 export default {
-    props: ['mykey'],
+    props: ['incoming_key'],
     data() {
         return {
-            nValue: this.mykey
+            key_details: ""
         }
     },
     methods: {
-        printFile() { 
-            const doc = new jspdf();
-            let canvasElement = document.createElement('canvas');
-            html2canvas(this.$refs.content.innerHTML, {canvas: canvasElement})
-            .then((canvas) => {
-                const img = canvas.toDataURL("image/jpeg", 0.8);
-                doc.addImage(img, 'JPEG', 20, 20)
-            });
-            console.log('Yes, I got clicked but whatelse')        
-            // var elementHandler = {
-            //     '#ignorePDF': function (element, renderer) {
-            //         return true;
-            //     }
-            // };
-
-
-            doc.save("license.pdf")
-
-            // Pdf.fromHTML(
-            //     source,
-            //     15,
-            //     15,
-            //     {
-            //     'width': 180,'elementHandlers': elementHandler
-            //     });
-
-            // Pdf.save("lincens4-key.pdf");
-        },
-
-
         printWithStyle() {
             const page = document.getElementById('invoice');
             html2PDF(page, {
@@ -136,7 +76,11 @@ export default {
         }
     },
     created() {
-        console.log('PrintKey Component Mounted')
+        console.log(this.incoming_key)
+        axios.get('/admin/view-apiaccess-key?i='+this.incoming_key)
+        .then((data)=>{
+            this.key_details = data.data
+        })
     }
 }
 </script>
@@ -145,7 +89,6 @@ export default {
     .invoice {
         position: relative;
         background-color: #FFF;
-        min-height: 680px;
         padding: 15px
     }
 

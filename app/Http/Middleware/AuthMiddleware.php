@@ -20,7 +20,11 @@ class AuthMiddleware
             if (Auth::guard('admin')->guest()) {
                 return redirect()->route('admin/login');
             }
+            // if(Auth::guard('admin')->check()) {
+            //     return redirect()->intended('admin/dashboard');
+            // }
         }
+        
         return $next($request);
     }
 }

@@ -1,7 +1,7 @@
 @extends('layouts.app')
 
 @section('content')
-   @if($accessKey)
-      <print-key mykey="{{$accessKey}}"></print-key>
+   @if($key)
+      <print-key incoming_key="{{$key}}"></print-key>
    @endif
 @endsection
