@@ -15,6 +15,7 @@ class AddUuidToUsersTable extends Migration
     {
         Schema::table('users', function (Blueprint $table) {
             $table->uuid('uuid')->unique()->after('id');
+            $table->date('uuiactivation_dated')->nullable()->before('created_at');
         });
     }
 

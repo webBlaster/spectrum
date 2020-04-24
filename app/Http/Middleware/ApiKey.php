@@ -2,17 +2,11 @@
 
 namespace App\Http\Middleware;
 
+use Carbon\Carbon;
 use Closure;
 use App\DeveloperApiKey;
 class ApiKey
 {
-    /**
-     * Handle an incoming request.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  \Closure  $next
-     * @return mixed
-     */
     public function handle($request, Closure $next)
     {
         if($request->apikey == '') {
@@ -22,8 +16,9 @@ class ApiKey
                 'status' => 0
             ]);
         } else {
-            $apikey = DeveloperApiKey::where('key', $request->apikey)->count();
-            if($apikey != 1) {
+            $present = Carbon::now();
+            $apikey = DeveloperApiKey::where('key', $request->apikey)->where('valid_from', '<=', $present)->where('valid_till', '>=', $present)->first();
+            if(!$apikey) {
                 return response()->json([
                     'message' => 'Invalid API KEY',
                     'data' => '',

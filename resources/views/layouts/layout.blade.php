@@ -69,24 +69,24 @@
   <!-- Custom js for this page-->
   <script src="{{ asset('js/dashboard.js')}}"></script>
   <!-- End custom js for this page-->#
-<script src="{{ asset('js/dataTables.min.js') }}"></script>
-<script src="{{ asset('js/dataTables.material.min.js') }}"></script>
-
-
+{{-- <script src="{{ asset('js/dataTables.min.js') }}"></script>
+<script src="{{ asset('js/dataTables.material.min.js') }}"></script> --}}
+  
+  
   <script>
 
 </script>
   <script>
     $(document).ready(function() {
-
-      $('table').DataTable( {
-          columnDefs: [
-              {
-                targets: [ 0, 1, 2 ],
-                className: 'mdl-data-table__cell--non-numeric'
-              }
-          ]
-      } );
+      
+      // $('table').DataTable( {
+      //     columnDefs: [
+      //         {
+      //           targets: [ 0, 1, 2 ],
+      //           className: 'mdl-data-table__cell--non-numeric'
+      //         }
+      //     ]
+      // } );
   } );
   </script>
 </body>

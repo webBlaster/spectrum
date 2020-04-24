@@ -1,7 +1,7 @@
 <!-- partial:partials/_sidebar.html -->
 <aside class="mdc-drawer mdc-drawer--dismissible mdc-drawer--open">
     <div class="mdc-drawer__header">
-        <a href="{{ url('/admin') }}" class="brand-logo">
+        <a href="{{ url('/admin/dashboard') }}" class="brand-logo">
             <img src="{{ asset('images/sp-book.png') }}" alt="logo">
             <h3 style="color: white;">SPECTRUM BOOKS</h3>
         </a>
@@ -54,26 +54,33 @@
                     </div>
                 </div>
                 <div class="mdc-list-item mdc-drawer-item" tabindex="-1">
-                    <a class="mdc-expansion-panel-link" href="#" data-toggle="expansionPanel" data-target="sample-page-submenu" tabindex="-1">
+                    <a class="mdc-expansion-panel-link" href="#" data-toggle="expansionPanel" data-target="key-management" tabindex="-1">
                         <i class="material-icons mdc-list-item__start-detail mdc-drawer-item-icon" aria-hidden="true">lock</i>
                             Key Management
                         <i class="mdc-drawer-arrow material-icons">chevron_right</i>
                     </a>
-                    <div class="mdc-expansion-panel" id="sample-page-submenu">
+                    <div class="mdc-expansion-panel" id="key-management">
                         <nav class="mdc-list mdc-drawer-submenu">
                             <div class="mdc-list-item mdc-drawer-item" tabindex="-1">
-                            <a class="mdc-drawer-link" href="" tabindex="-1">
+                            <a class="mdc-drawer-link" href="{{route('keys.index')}}" tabindex="-1">
                                 <i class="material-icons mdc-list-item__start-detail mdc-drawer-item-icon"
                             aria-hidden="true">view_list</i>
                                 All Licenses
                             </a>
                             </div>
                             <div class="mdc-list-item mdc-drawer-item" tabindex="-1">
-                            <a class="mdc-drawer-link" href="" tabindex="-1">
+                            <a class="mdc-drawer-link" href="{{route('keys.create')}}" tabindex="-1">
                                 <i class="material-icons mdc-list-item__start-detail mdc-drawer-item-icon"
                             aria-hidden="true">build</i>
                                 New License
                             </a>
+                            </div>
+                            <div class="mdc-list-item mdc-drawer-item">
+                                <a class="mdc-drawer-link" href="{{ url('/admin/licenses/used-licenses') }}">
+                                    <i class="material-icons mdc-list-item__start-detail mdc-drawer-item-icon"
+                                        aria-hidden="true">track_changes</i>
+                                    Used Licenses
+                                </a>
                             </div>
                         </nav>
                     </div>
@@ -104,7 +111,7 @@
                         </a>
                     </div>
                     <div class="mdc-list-item mdc-drawer-item">
-                        <a class="mdc-drawer-link" href="{{ url('/admin/manage-apiaccess-keys') }}">
+                        <a class="mdc-drawer-link" href="{{ url('/admin/api_accesskey_management') }}">
                             <i class="material-icons mdc-list-item__start-detail mdc-drawer-item-icon"
                                 aria-hidden="true">code</i>
                             API Access Keys

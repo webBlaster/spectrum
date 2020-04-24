@@ -23,7 +23,7 @@ class DeveloperApiKeysCollection extends Resource
         } elseif($this->valid_from < $present && $this->valid_till < $present) {
             $status = 'Expired';
             $expiry = '';
-        } elseif($this->valid_from < $present && $this->valid_till > $present) {
+        } elseif($this->valid_from <= $present && $this->valid_till > $present) {
             $status = 'Active';
             $expiry = '';
         } else {

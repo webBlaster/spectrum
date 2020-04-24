@@ -19,7 +19,7 @@ Route::middleware('auth:api')->get('/user', function (Request $request) {
 });
 
 Route::namespace('API')->group(function() {
-        Route::get('spectrum/apikey={apiKey}', 'SpectrumApiController@index');
-        Route::post('spectrum/apikey={apikey}', 'SpectrumApiController@store');
-        Route::put('spectrum/{uuid}/apikey={apikey}', 'SpectrumApiController@update');
+        Route::get('spectrum', 'SpectrumApiController@index');
+        Route::post('spectrum', 'SpectrumApiController@store');
+        Route::put('spectrum/{uuid}', 'SpectrumApiController@update');
 });
