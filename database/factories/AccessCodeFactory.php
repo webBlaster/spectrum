@@ -10,7 +10,7 @@ $factory->define(AccessCode::class, function (Faker $faker) {
     $group = App\Group::pluck('id');
     return [
         'group_id' => $faker->randomElement($group),
-        'name' => $faker->title,
+        'license_name' => $faker->title,
         'code' => $faker->bankAccountNumber,
         'books_contained'  => '',
         'max_number_of_users'  => rand(1, 50),

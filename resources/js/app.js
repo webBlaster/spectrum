@@ -106,8 +106,9 @@ Vue.component('all-licenses', require('./components/AllLicenses.vue').default);
 Vue.component('used-licenses', require('./components/UsedLicenses.vue').default);
 Vue.component('thrashed-licenses', require('./components/ThrashedLicense.vue').default);
 Vue.component('edit-license', require('./components/EditLicense.vue').default);
+Vue.component('dashboard-licenses', require('./components/DashboardLicenses.vue').default);
 
-
+Vue.component('chat-app', require('./components/userSupport/ChatApp.vue').default);
 
 Vue.component('image-upload', require('./components/FormUpload').default);
 
