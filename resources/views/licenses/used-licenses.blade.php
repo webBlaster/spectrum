@@ -1,6 +1,6 @@
 @extends('layouts.layout')
 
 @section('content')
-    <used-licenses></used-licenses>
+  <used-licenses category="all"></used-licenses>
 @endsection
 

@@ -31,7 +31,9 @@ class AddNameAndPriceFieldsToAccessCodesTable extends Migration
     {
         Schema::table('access_codes', function (Blueprint $table) {
             $table->dropColumn('price');
-            $table->dropColumn('name');
+            $table->dropColumn('uuid');
+            $table->dropColumn('license_name');
+            $table->dropColumn('expires');
             $table->dropColumn('deleted_at');
         });
     }

@@ -15,13 +15,15 @@ class UsedLicensesResourceCollection extends Resource
      */
     public function toArray($request)
     {
-        $access_code = AccessCode::where('code', $this->access_code)->get();
-        if(count($access_code) < 1) {
-            $expires = '';
-            $access_code_uuid = '';
-        } else {
-            $expires = $access_code->expires;
-            $access_code_uuid = $access_code->uuid;
+        $used_access_code = AccessCode::where('code', $this->access_code)->first();
+        
+        $expires = '';
+        $access_code_uuid = '';
+        $category = '';
+        if($used_access_code) {
+            $expires = $used_access_code->expires;
+            $access_code_uuid = $used_access_code->uuid;
+            $category = $used_access_code->group;
         }
         return [
             'user_uuid'             =>              $this->uuid,
@@ -31,6 +33,7 @@ class UsedLicensesResourceCollection extends Resource
             'activation_date'       =>              $this->activation_date,
             'expires'               =>              $expires,
             'access_code_uuid'      =>              $access_code_uuid,
+            'category'              =>              $category,
         ];
     }
 }

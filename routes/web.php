@@ -16,6 +16,14 @@ use Carbon\Carbon;
 
 
 Route::get('/relationship', function() {
+
+
+    $used_access_code = AccessCode::where('code', '1100-7881-1451-2906')->first();
+    if($used_access_code) {
+        return $used_access_code->license_name;
+    } else {
+        return "Not Found";
+    }
     // $access_code = AccessCode::withTrashed()->with('books')->where('uuid', '1843baa5e2a5b140744851733dabe0b1')->get();
     // return $access_code;
     // return $access_code->books;
@@ -125,6 +133,14 @@ Route::group(['prefix' => 'admin',  'namespace' => 'Admin'], function () {
         Route::put('/alter-priviledge/{id}', 'SpectrumAccountController@switch_privilege');
 
     });
+
+    Route::group(['prefix' => 'support',  'namespace' => 'UserSupport'], function () {
+        Route::get('/contacts', 'UserSupportController@get');
+        Route::get('/conversation/{id}', 'UserSupportController@getMessagesFor');
+        Route::post('/conversation/send', 'UserSupportController@send');
+       
+    });
+
 });
 
 

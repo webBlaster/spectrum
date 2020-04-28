@@ -207,7 +207,7 @@ class SpectrumLicenseController extends Controller
     }
 
     public function all_used_licenses() {
-        return UsedLicensesResourceCollection::collection(User::where('access_code', '<>', null)->get());
+        return UsedLicensesResourceCollection::collection(User::where('access_code', '<>', null)->paginate(10));
     }
     
     public function findUser() {
