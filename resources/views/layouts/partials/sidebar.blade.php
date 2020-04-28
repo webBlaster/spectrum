@@ -41,15 +41,6 @@
                                 Uploaded Books
                             </a>
                         </div>
-                        @if(Auth::guard('admin')->user()->can('isSuperAdmin'))
-                        <div class="mdc-list-item mdc-drawer-item">
-                            <a class="mdc-drawer-link" href="{{ url('admin/books/deleted-books') }}">
-                                <i class="material-icons mdc-list-item__start-detail mdc-drawer-item-icon"
-                                    aria-hidden="true">delete</i>
-                                Deleted Books
-                            </a>
-                        </div>
-                        @endif
                       </nav>
                     </div>
                 </div>
@@ -85,22 +76,6 @@
                         </nav>
                     </div>
                   </div>
-
-
-                <div class="mdc-list-item mdc-drawer-item">
-                    <a class="mdc-drawer-link" href="{{ url('/admin/licenses/user-licenses') }}">
-                        <i class="material-icons mdc-list-item__start-detail mdc-drawer-item-icon"
-                            aria-hidden="true">track_changes</i>
-                        User License
-                    </a>
-                </div>
-                <div class="mdc-list-item mdc-drawer-item">
-                    <a class="mdc-drawer-link" href="{{ url('/licenses/generated-licenses') }}">
-                        <i class="material-icons mdc-list-item__start-detail mdc-drawer-item-icon"
-                            aria-hidden="true">grid_on</i>
-                        Generated Licenses
-                    </a>
-                </div>
 
                 @if(Auth::guard('admin')->user()->can('isSuperAdmin'))
                     <div class="mdc-list-item mdc-drawer-item">
