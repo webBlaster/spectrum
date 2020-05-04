@@ -5,11 +5,12 @@ namespace App\Http\Controllers\Admin\Books;
 use App\Book;
 use App\DeveloperApiKey;
 use App\Http\Controllers\Controller;
+use Auth;
+use Illuminate\Database\Eloquent\SoftDeletes;
 use Illuminate\Http\Request;
 use Illuminate\Support\Str;
+use SoareCostin\FileVault\Facades\FileVault;
 use Storage;
-use Illuminate\Database\Eloquent\SoftDeletes;
-use Auth;
 
 class SpectrumBooksController extends Controller
 {
@@ -74,6 +75,7 @@ class SpectrumBooksController extends Controller
 
         if ($book->save()) {
 
+            FileVault::encryptCopy($book->path, $book->title.'.enc');
 
             $auid = Auth::guard('admin')->user()->uuid;
             $title = "Book Upload";
