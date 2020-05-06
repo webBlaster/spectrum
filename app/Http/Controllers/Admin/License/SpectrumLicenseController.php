@@ -11,8 +11,9 @@ use App\Http\Resources\LicenseKey;
 use App\Http\Resources\LicenseResourceCollection;
 use App\Http\Resources\UsedLicensesResourceCollection;
 use App\User;
-use Illuminate\Http\Request;
+use Auth;
 use DB;
+use Illuminate\Http\Request;
 
 class SpectrumLicenseController extends Controller
 {
@@ -77,6 +78,14 @@ class SpectrumLicenseController extends Controller
             'max_number_of_users' => $request->max_number_of_user,
             'duration' => $request->duration
         ]);
+
+            $auid = Auth::guard('admin')->user()->uuid;
+            $title = "License Creation";
+            $action = "Creation of " . $access_code->code;
+            $ip_address = $request->ip();
+
+            log_activity($auid, $title, $action, null, $ip_address);
+
         // foreach($books_attached as $book_id) {
         //     $id = (int) $book_id;
         //     $access_code->books()->attach($id);
@@ -120,6 +129,13 @@ class SpectrumLicenseController extends Controller
                     $access_code->update(['books_contained' => implode(',', $books_update)]);
                     // return $access_code->books_contained;
                     $access_code->books()->detach($book_id);
+
+                    $auid = Auth::guard('admin')->user()->uuid;
+                    $title = "Removal of Book fro License";
+                    $action = "Removal of book from " . $access_code->code;
+                    $ip_address = $request->ip();
+
+                    log_activity($auid, $title, $action, null, $ip_address);
                     return ['Success', 'Book Successfuly Detached'];
                 } else {
                     abort(403, "Cannot Delete the last item", ['message', 'Cannot remove the last item']);
@@ -165,6 +181,14 @@ class SpectrumLicenseController extends Controller
             'duration'              => $request->duration
         ]);
 
+
+        $auid = Auth::guard('admin')->user()->uuid;
+        $title = "License Update";
+        $action = "Update of " . $access_code->code;
+        $ip_address = $request->ip();
+
+        log_activity($auid, $title, $action, null, $ip_address);
+
        return ['success', 'Books Successfully attached to the license'];
 
     }
@@ -175,10 +199,18 @@ class SpectrumLicenseController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function destroy($uuid)
+    public function destroy(Request $request, $uuid)
     {
         $findLicense = AccessCode::findByUuid($uuid)
                         ->delete();
+
+        $auid = Auth::guard('admin')->user()->uuid;
+        $title = "License Removal";
+        $action = "Removal of " . $findLicense->code;
+        $ip_address = $request->ip();
+
+        log_activity($auid, $title, $action, null, $ip_address);
+
         return response()->json(['Success', 'Licese Thrashed']);
     }
 
@@ -195,11 +227,25 @@ class SpectrumLicenseController extends Controller
         $access_code = AccessCode::onlyTrashed()->where('uuid', $request->get('uuid'));
         $access_code->forceDelete();
         BookAccessCode::where('access_code_uuid', $request->get('uuid'))->delete();
+
+        $auid = Auth::guard('admin')->user()->uuid;
+        $title = "Permanent License Deletion";
+        $action = "Permanent Deletion of " . $access_code->code;
+        $ip_address = $request->ip();
+
+        log_activity($auid, $title, $action, null, $ip_address);
         return ['success', 'License permanently removed'];
     }
 
     public function restoreDeleted(Request $request) {
         $restored = AccessCode::withTrashed()->where('uuid', $request->get('uuid'))->restore();
+
+        $auid = Auth::guard('admin')->user()->uuid;
+        $title = "License Restoration";
+        $action = "Restoration of " . $restored->code;
+        $ip_address = $request->ip();
+
+        log_activity($auid, $title, $action, null, $ip_address);
         return ['success', 'Retored Thrashed License'];
     }
 

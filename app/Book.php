@@ -27,6 +27,10 @@ class Book extends Model
     }
     public function get_download_link()
     {
-        return FileVault::decryptCopy(Storage::url($this->path));
+
+        return response()->streamDownload(function () {
+            FileVault::streamDecrypt($this->path.".enc");
+        }, $this->title);
+
     }
 }

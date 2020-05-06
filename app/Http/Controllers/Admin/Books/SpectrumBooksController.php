@@ -66,20 +66,15 @@ class SpectrumBooksController extends Controller
 
         $book->path = $request
             ->file('book')
-            ->storeAs(
-                'public/books',
-                $request->title .
-                    '.' .
-                    $request->book->getClientOriginalExtension()
-            );
+            ->storeAs('public/books', $book->title . "." . $request->file('book')->extension());
 
         if ($book->save()) {
 
-            FileVault::encryptCopy($book->path, $book->title.'.enc');
+            FileVault::encrypt($book->path);
 
             $auid = Auth::guard('admin')->user()->uuid;
             $title = "Book Upload";
-            $action = "Upload of ".$book->title;
+            $action = "Upload of " . $book->title;
             $ip_address = $request->ip();
 
             log_activity($auid, $title, $action, null, $ip_address);
@@ -138,7 +133,7 @@ class SpectrumBooksController extends Controller
             'publisher' => 'required',
             'description' => 'required',
             'date_published' =>
-                'required|date|before_or_equal:' . date('Y-m-d'),
+            'required|date|before_or_equal:' . date('Y-m-d'),
             // 'front_cover' => 'mimes:jpg, jpeg, png, gif, bmp',
             // 'book' => 'mimes:pdf,html,epub,ocr,docx,doc'
         ]);
@@ -158,22 +153,24 @@ class SpectrumBooksController extends Controller
         }
 
         if ($request->hasFile('book')) {
-            Storage::delete($book->path);
+            Storage::delete($book->path . ".enc");
+
             $book->path = $request
                 ->file('book')
                 ->storeAs(
                     'public/books',
                     $request->title .
                         '.' .
-                        $request->book->getClientOriginalExtension()
+                        $request->file('book')->extension()
                 );
         }
 
         if ($book->save()) {
 
+            FileVault::encrypt($book->path);
             $auid = Auth::guard('admin')->user()->uuid;
             $title = "Book Editing";
-            $action = "Editing of ".$book->title;
+            $action = "Editing of " . $book->title;
             $ip_address = $request->ip();
 
             log_activity($auid, $title, $action, null, $ip_address);
@@ -203,7 +200,7 @@ class SpectrumBooksController extends Controller
 
         $auid = Auth::guard('admin')->user()->uuid;
         $title = "Book Deletion";
-        $action = "Deletion of ".$book->title;
+        $action = "Deletion of " . $book->title;
         $ip_address = $request->ip();
 
         log_activity($auid, $title, $action, null, $ip_address);
