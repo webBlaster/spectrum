@@ -124,9 +124,9 @@ Route::group(['prefix' => 'admin',  'namespace' => 'Admin'], function () {
 
 
     Route::group(['namespace' => 'Developer'], function () {
-        Route::resource('api_accesskey_management', 'DeveloperApikeyController');
-        Route::get('view-apiaccess-key', 'DeveloperApikeyController@showKey');
-        Route::get('get-apiaccess-keys', 'DeveloperApikeyController@showAll');
+        Route::resource('api_accesskey_management', 'DeveloperApiKeyController');
+        Route::get('view-apiaccess-key', 'DeveloperApiKeyController@showKey');
+        Route::get('get-apiaccess-keys', 'DeveloperApiKeyController@showAll');
     });
 
 
@@ -143,7 +143,7 @@ Route::group(['prefix' => 'admin',  'namespace' => 'Admin'], function () {
         Route::get('/contacts', 'UserSupportController@get');
         Route::get('/conversation/{id}', 'UserSupportController@getMessagesFor');
         Route::post('/conversation/send', 'UserSupportController@send');
-       
+
     });
 
 });

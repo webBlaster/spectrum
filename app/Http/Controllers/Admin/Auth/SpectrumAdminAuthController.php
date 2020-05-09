@@ -3,10 +3,10 @@
 namespace App\Http\Controllers\Admin\Auth;
 
 use App\Admin;
-use Auth;
 use App\Http\Controllers\Controller;
-use Illuminate\Support\Facades\Hash;
+use Auth;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Hash;
 
 class SpectrumAdminAuthController extends Controller
 {
@@ -38,7 +38,7 @@ class SpectrumAdminAuthController extends Controller
             'username' => 'required|max:50|unique:admins',
             'phone' => 'required|numeric|unique:admins',
             'email' => 'required|email|unique:admins',
-            'password' => 'required|confirmed|min:6'
+            'password' => 'required|confirmed|min:6|alpha_dash'
         ]);
 
         $admin = new Admin();

@@ -4,8 +4,8 @@ namespace App;
 
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
+use Illuminate\Support\Facades\Storage;
 use SoareCostin\FileVault\Facades\FileVault;
-use Storage;
 
 class Book extends Model
 {
@@ -25,12 +25,14 @@ class Book extends Model
         return Storage::url($this->front_cover);
 
     }
+
     public function get_download_link()
     {
+        $name = basename($this->path);
 
-        return response()->streamDownload(function () {
+        return response()->streamDownload(function () use ($name) {
             FileVault::streamDecrypt($this->path.".enc");
-        }, $this->title);
+        }, $name);
 
     }
 }
