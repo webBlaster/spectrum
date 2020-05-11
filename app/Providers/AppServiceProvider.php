@@ -29,8 +29,8 @@ class AppServiceProvider extends ServiceProvider
         date_default_timezone_set('Africa/Lagos');
         Schema::defaultStringLength(191);
 
-        if(config('app.env') === 'production') {
-            \URL::forceSchema('https');
+        if(config('APP_ENV') === 'production') {
+            \URL::forceScheme('https');
         }
 
     }

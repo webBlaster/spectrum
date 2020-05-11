@@ -6,7 +6,7 @@
         <div class="mdc-card p-0">
             <h6 class="card-title card-padding pb-0">Restore Deleted Books </h6>
             @isset($books)
-            @empty($book)
+            @empty($books)
             <p class="text-center">No Deleted Books Yet.</p>
             @else
             <div class="table-responsive">
