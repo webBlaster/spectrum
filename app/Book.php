@@ -5,7 +5,10 @@ namespace App;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
 use Illuminate\Support\Facades\Storage;
+use mikehaertl\tmp\File;
 use SoareCostin\FileVault\Facades\FileVault;
+use Spatie\TemporaryDirectory\TemporaryDirectory;
+
 
 class Book extends Model
 {
@@ -17,22 +20,13 @@ class Book extends Model
     {
         return $this->all()->count();
     }
-    public function access_codes() {
+    public function access_codes()
+    {
         return $this->belongsToMany(AccessCode::class, 'book_access_code', 'access_code_uuid', 'book_id', 'uuid')->withPivot('created_at', '');
     }
+
     public function get_front_cover()
     {
         return Storage::url($this->front_cover);
-
-    }
-
-    public function get_download_link()
-    {
-        $name = basename($this->path);
-
-        return response()->streamDownload(function () use ($name) {
-            FileVault::streamDecrypt($this->path.".enc");
-        }, $name);
-
     }
 }

@@ -25,8 +25,9 @@
 
                             </div>
                             <div class="mdc-layout-grid__cell stretch-card mdc-layout-grid__cell--span-4">
-                                <a href="{{ $book->get_download_link() }}" download><img src="{{ $book->get_front_cover() }}"
-                                        class="img img-responsive" style="width:60%"></a>
+                                <a href="{{ url('admin/books/preview-book/'.$book->id) }}" download><img
+                                        src="{{ $book->get_front_cover() }}" class="img img-responsive"
+                                        style="width:60%"></a>
                             </div>
                             <div class="mdc-layout-grid__cell stretch-card mdc-layout-grid__cell--span-4">
 
@@ -74,14 +75,20 @@
                             </div>
                             <div class="mdc-layout-grid__cell stretch-card mdc-layout-grid__cell--span-6">
                                 <div class="mdc-layout-grid__cell stretch-card mdc-layout-grid__cell--span-2">
-                                    <a href="{{ url('admin/books/edit-book/'.$book->id) }}" class="mdc-button mdc-button--raised filled-button--success">
+                                    <a href="{{ url('admin/books/edit-book/'.$book->id) }}"
+                                        class="mdc-button mdc-button--raised filled-button--success">
                                         Edit Book
                                     </a>
                                 </div>
                                 <div class="mdc-layout-grid__cell stretch-card mdc-layout-grid__cell--span-2">
+                                    <a href="{{ url('admin/books/preview-book/'.$book->id) }}"
+                                        class="mdc-button mdc-button--raised filled-button--warning">
+                                        Preview Book
+                                    </a>
                                 </div>
                                 <div class="mdc-layout-grid__cell stretch-card mdc-layout-grid__cell--span-2">
-                                    <button type="button" book_id="{{ $book->id }}" class="mdc-button mdc-button--raised filled-button--secondary delete_btn">
+                                    <button type="button" book_id="{{ $book->id }}"
+                                        class="mdc-button mdc-button--raised filled-button--secondary delete_btn">
                                         Delete Book
                                     </button>
                                 </div>

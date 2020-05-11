@@ -21,7 +21,9 @@
         "laravel/tinker": "^2.0",
         "laravelcollective/html": "^6.0",
         "michelf/php-markdown": "^1.9",
-        "soarecostin/file-vault": "^1.0"
+        "mikehaertl/php-tmpfile": "^1.1",
+        "soarecostin/file-vault": "^1.0",
+        "spatie/temporary-directory": "^1.2"
     },
     "require-dev": {
         "barryvdh/laravel-ide-helper": "^2.6",

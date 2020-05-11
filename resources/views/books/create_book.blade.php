@@ -12,7 +12,7 @@
                 <div class="d-flex justify-content-between">
 
                     <div class="mdc-card">
-                        <h6 class="card-title">Edit Book</h6>
+                        <h6 class="card-title">Upload Book</h6>
                         <div class="template-demo">
                             <div class="mdc-layout-grid__inner">
                                 <div class="mdc-layout-grid__cell stretch-card mdc-layout-grid__cell--span-6-desktop">

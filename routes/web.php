@@ -120,6 +120,8 @@ Route::group(['prefix' => 'admin',  'namespace' => 'Admin'], function () {
         Route::get('/deleted-books', 'SpectrumBooksController@show_trashed');
 
         Route::get('/restore-book/{id}', 'SpectrumBooksController@restore');
+
+        Route::get('/preview-book/{id}', 'SpectrumBooksController@preview');
     });
 
 

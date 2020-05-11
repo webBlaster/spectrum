@@ -9,6 +9,7 @@ use Auth;
 use Illuminate\Database\Eloquent\SoftDeletes;
 use Illuminate\Http\Request;
 use Illuminate\Support\Str;
+use mikehaertl\tmp\File;
 use SoareCostin\FileVault\Facades\FileVault;
 use Storage;
 
@@ -167,7 +168,9 @@ class SpectrumBooksController extends Controller
 
         if ($book->save()) {
 
+
             FileVault::encrypt($book->path);
+
             $auid = Auth::guard('admin')->user()->uuid;
             $title = "Book Editing";
             $action = "Editing of " . $book->title;
@@ -227,5 +230,22 @@ class SpectrumBooksController extends Controller
             'success',
             'Book Successfully Restored.'
         );
+    }
+
+    public function preview(Request $request)
+    {
+        $book = Book::findOrFail($request->id);
+        // exit(var_dump($book->path));
+        FileVault::decryptCopy($book->path . ".enc");
+
+        $name = basename($book->path);
+        $contents = Storage::get($book->path);
+        $extension = pathinfo($book->path, PATHINFO_EXTENSION);
+
+        $decrypted_book = new File($contents, null, null, null);
+
+        Storage::delete($book->path);
+
+        $decrypted_book->send($name, $extension, true);
     }
 }
