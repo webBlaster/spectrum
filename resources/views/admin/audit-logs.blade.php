@@ -12,6 +12,7 @@
             <table class="table table-hoverable">
                 <thead>
                     <tr>
+                        <th>SN</th>
                         <th class="text-left">Title</th>
                         <th>Action</th>
                         <th>Admin</th>
@@ -21,8 +22,10 @@
                     </tr>
                 </thead>
                 <tbody>
+                    @php($count = 0)
                     @foreach($logs as $log)
                     <tr>
+                        <td>{{ ++$count }}</td>
                         <td class="text-left">{{ $log->title }}</td>
                         <td>{{ $log->action }}</td>
                         <td>{{ $log->admin }}</td>

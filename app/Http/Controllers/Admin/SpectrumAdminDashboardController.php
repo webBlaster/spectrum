@@ -2,14 +2,14 @@
 
 namespace App\Http\Controllers\Admin;
 
-use App\Http\Controllers\Controller;
-use Illuminate\Http\Request;
 use App\Admin;
-use Auth;
-use App\User;
-use App\License;
 use App\Book;
+use App\Http\Controllers\Controller;
+use App\License;
+use App\User;
+use Auth;
 use DB;
+use Illuminate\Http\Request;
 
 class SpectrumAdminDashboardController extends Controller
 {
@@ -54,7 +54,7 @@ class SpectrumAdminDashboardController extends Controller
 
     public function audit_logs()
     {
-        $logs = DB::table('audit_logs')->get();
+        $logs = DB::table('audit_logs')->latest()->get();
 
         foreach ($logs as $log) {
             $log->admin = $this->fetch_admin($log->auid);
