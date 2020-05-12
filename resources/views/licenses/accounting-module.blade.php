@@ -24,6 +24,12 @@
                         <td>{{ $access_code->count * $access_code->price }}</td>
                     </tr>
                     @endforeach
+                    <tr>
+                        <td class="text-left">Summary and Totals</td>
+                        <td>NAN</td>
+                        <td>{{ $total_number_of_users }}</td>
+                        <td>{{ $total_revenue }}</td>
+                    </tr>
                 </tbody>
             </table>
         </div>

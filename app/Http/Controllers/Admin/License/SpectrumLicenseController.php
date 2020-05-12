@@ -285,10 +285,15 @@ class SpectrumLicenseController extends Controller
         // dd($access_codes);
 
         foreach ($access_codes as $access_code) {
-           $access_code->count = $this->count_license_usage($access_code->code);
+            $access_code->count = $this->count_license_usage($access_code->code);
+            $access_code->revenue = $access_code->count * $access_code->price;
         }
 
-        return view('licenses.accounting-module', ["access_codes" => $access_codes]);
+        $total_revenue = $access_codes->sum('revenue');
+        $total_number_of_users = $access_codes->sum('count');
+
+        return view('licenses.accounting-module', ["access_codes" => $access_codes, "total_revenue" => $total_revenue, "total_number_of_users" => $total_number_of_users]);
+
     }
 
     private function count_license_usage($access_code)
