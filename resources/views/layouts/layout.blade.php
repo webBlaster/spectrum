@@ -75,6 +75,40 @@
     <script src="{{ asset('js/table2csv.min.js') }}"></script>
     <script src="https://gitcdn.xyz/repo/FuriosoJack/TableHTMLExport/v1.0.0/src/tableHTMLExport.js"></script>
     <script>
+
+function exportTableToExcel(tableID, filename = ''){
+      var downloadLink;
+      var dataType = 'application/vnd.ms-excel';
+      var tableSelect = document.getElementById(tableID);
+      var tableHTML = tableSelect.outerHTML.replace(/ /g, '%20');
+
+      // Specify file name
+      filename = filename?filename+'.xls':'excel_data.xls';
+
+      // Create download link element
+      downloadLink = document.createElement("a");
+
+      document.body.appendChild(downloadLink);
+
+      if(navigator.msSaveOrOpenBlob){
+          var blob = new Blob(['\ufeff', tableHTML], {
+              type: dataType
+          });
+          navigator.msSaveOrOpenBlob( blob, filename);
+      }else{
+          // Create a link to the file
+          downloadLink.href = 'data:' + dataType + ', ' + tableHTML;
+
+          // Setting the file name
+          downloadLink.download = filename;
+
+          //triggering the function
+          downloadLink.click();
+
+          location.reload();
+      }
+  }
+
         $(document).ready(function() {
             $(":submit").click(function() {
                 $(this).attr('disabled', 'disabled');
@@ -92,21 +126,9 @@
             $('.export_btn').click(function() {
 
                 var filename = $(this).attr('title');
+                var table_id = $('table').attr('id');
 
-                // $('table').table2csv({
-                //     separator:',',
-                //     newline:'\n',
-                //     quoteFields:false,
-                //     excludeColumns:'',
-                //     excludeRows:'',
-                //     trimContent:true,
-                //     filename: filename+".csv"
-                // });
-
-                $('table').tableHTMLExport({
-                    type: 'csv',
-                    filename: filename
-                });
+                exportTableToExcel(table_id, filename);
             });
         } );
     </script>
