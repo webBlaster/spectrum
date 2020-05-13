@@ -73,6 +73,7 @@
     <script src="{{ asset('js/dataTables.min.js') }}"></script>
     <script src="{{ asset('js/dataTables.material.min.js') }}"></script>
     <script src="{{ asset('js/table2csv.min.js') }}"></script>
+    <script src="https://gitcdn.xyz/repo/FuriosoJack/TableHTMLExport/v1.0.0/src/tableHTMLExport.js"></script>
     <script>
         $(document).ready(function() {
             $(":submit").click(function() {
@@ -92,13 +93,18 @@
 
                 var filename = $(this).attr('title');
 
-                $('table').table2csv({
-                    separator:',',
-                    newline:'\n',
-                    quoteFields:false,
-                    excludeColumns:'',
-                    excludeRows:'',
-                    trimContent:true,
+                // $('table').table2csv({
+                //     separator:',',
+                //     newline:'\n',
+                //     quoteFields:false,
+                //     excludeColumns:'',
+                //     excludeRows:'',
+                //     trimContent:true,
+                //     filename: filename+".csv"
+                // });
+
+                $('table').tableHTMLExport({
+                    type: 'csv',
                     filename: filename
                 });
             });
