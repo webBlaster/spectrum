@@ -18,7 +18,7 @@
                         <div class="template-demo">
                             <div class="mdc-layout-grid__inner">
                                 <div class="mdc-layout-grid__cell mdc-layout-grid__cell--span-4">
-                                    <a href="{{ $book->get_download_link() }}"><img src="{{ $book->get_front_cover() }}"
+                                    <a><img src="{{ $book->get_front_cover() }}"
                                             class="img img-responsive" style="width:60%;"></a>
                                 </div>
                                 <div class="mdc-layout-grid__cell stretch-card mdc-layout-grid__cell--span-6-desktop">

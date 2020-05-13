@@ -72,23 +72,37 @@
     <!-- End custom js for this page-->
     <script src="{{ asset('js/dataTables.min.js') }}"></script>
     <script src="{{ asset('js/dataTables.material.min.js') }}"></script>
-
-
-    <script>
-
-    </script>
+    <script src="{{ asset('js/table2csv.min.js') }}"></script>
     <script>
         $(document).ready(function() {
+            $(":submit").click(function() {
+                $(this).attr('disabled', 'disabled');
+                $('form').submit();
+            });
 
-      $('table').DataTable( {
-          columnDefs: [
-              {
-                targets: [ 0, 1, 2 ],
-                className: 'mdl-data-table__cell--non-numeric'
-              }
-          ]
-      } );
-  } );
+            $('table').DataTable( {
+                columnDefs: [
+                {
+                    targets: [ 0, 1, 2 ],
+                    className: 'mdl-data-table__cell--non-numeric'
+                }]
+            } );
+
+            $('.export_btn').click(function() {
+
+                var filename = $(this).attr('title');
+
+                $('table').table2csv({
+                    separator:',',
+                    newline:'\n',
+                    quoteFields:false,
+                    excludeColumns:'',
+                    excludeRows:'',
+                    trimContent:true,
+                    filename: filename
+                });
+            });
+        } );
     </script>
 </body>
 

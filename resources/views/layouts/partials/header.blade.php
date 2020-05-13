@@ -4,17 +4,6 @@
       <div class="mdc-top-app-bar__section mdc-top-app-bar__section--align-start">
         <button class="material-icons mdc-top-app-bar__navigation-icon mdc-icon-button sidebar-toggler">menu</button>
         <span class="mdc-top-app-bar__title">Greetings {{Auth::guard('admin')->user()->name}}</span>
-        <div class="mdc-text-field mdc-text-field--outlined mdc-text-field--with-leading-icon search-text-field d-none d-md-flex">
-          <i class="material-icons mdc-text-field__icon">search</i>
-          <input class="mdc-text-field__input" id="text-field-hero-input">
-          <div class="mdc-notched-outline">
-            <div class="mdc-notched-outline__leading"></div>
-            <div class="mdc-notched-outline__notch">
-              <label for="text-field-hero-input" class="mdc-floating-label">Search..</label>
-            </div>
-            <div class="mdc-notched-outline__trailing"></div>
-          </div>
-        </div>
       </div>
       <div class="mdc-top-app-bar__section mdc-top-app-bar__section--align-end mdc-top-app-bar__section-right">
         <div class="menu-button-container menu-profile d-none d-md-block">
@@ -37,7 +26,7 @@
                 <div class="item-thumbnail item-thumbnail-icon-only">
                   <i class="mdi mdi-settings-outline text-primary"></i>
                 </div>
-                
+
                 <div class="item-content d-flex align-items-start flex-column justify-content-center">
                   <h6 class="item-subject font-weight-normal">
                     <a href="{{ route('admin.logout') }}"
@@ -56,7 +45,7 @@
           </div>
         </div>
         <div class="divider d-none d-md-block"></div>
-        
+
         <notify-user inline-template>
           <div>
             <div class="menu-button-container">

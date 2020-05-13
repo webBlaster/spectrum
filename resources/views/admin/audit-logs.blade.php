@@ -36,6 +36,7 @@
                     @endforeach
                 </tbody>
             </table>
+            <button type="button" class="export_btn" title="{{ "Audit Logs ".date('l jS F Y \a\t g:i:a') }}">Export to CSV</button>
         </div>
         @endempty
         @else
