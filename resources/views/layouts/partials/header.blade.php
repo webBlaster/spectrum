@@ -2,12 +2,12 @@
 <header class="mdc-top-app-bar">
     <div class="mdc-top-app-bar__row">
       <div class="mdc-top-app-bar__section mdc-top-app-bar__section--align-start">
-        <button class="material-icons mdc-top-app-bar__navigation-icon mdc-icon-button sidebar-toggler">menu</button>
+        <button type="button" class="material-icons mdc-top-app-bar__navigation-icon mdc-icon-button sidebar-toggler">menu</button>
         <span class="mdc-top-app-bar__title">Greetings {{Auth::guard('admin')->user()->name}}</span>
       </div>
       <div class="mdc-top-app-bar__section mdc-top-app-bar__section--align-end mdc-top-app-bar__section-right">
         <div class="menu-button-container menu-profile d-none d-md-block">
-          <button class="mdc-button mdc-menu-button">
+          <button type="button" class="mdc-button mdc-menu-button">
             <span class="d-flex align-items-center">
               <span class="user-name">{{Auth::guard('admin')->user()->username}}</span>
             </span>
@@ -49,7 +49,7 @@
         <notify-user inline-template>
           <div>
             <div class="menu-button-container">
-              <button class="mdc-button mdc-menu-button">
+              <button type="button" class="mdc-button mdc-menu-button">
                 <i class="mdi mdi-bell"></i>
               </button>
               <div class="mdc-menu mdc-menu-surface" tabindex="-1">
@@ -99,7 +99,7 @@
           </div>
         </notify-user>
         <div class="menu-button-container">
-          <button class="mdc-button mdc-menu-button">
+          <button type="button" class="mdc-button mdc-menu-button">
             <i class="mdi mdi-email"></i>
             <span class="count-indicator">
               <span class="count">3</span>
