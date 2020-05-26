@@ -8,8 +8,7 @@
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
     <title>Spectrum Books</title>
 
-    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css"
-        integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
     <link rel="stylesheet" href="{{ asset('css/material.min.css') }}">
     <link rel="stylesheet" href="{{ asset('css/dataTables.material.min.css') }}">
     <!-- plugins:css -->
@@ -33,6 +32,7 @@
         table {
             width: 100%;
         }
+
     </style>
 </head>
 
@@ -72,56 +72,54 @@
     <!-- End custom js for this page-->
     <script src="{{ asset('js/dataTables.min.js') }}"></script>
     <script src="{{ asset('js/dataTables.material.min.js') }}"></script>
-    <script src="{{ asset('js/table2csv.min.js') }}"></script>
-    <script src="https://gitcdn.xyz/repo/FuriosoJack/TableHTMLExport/v1.0.0/src/tableHTMLExport.js"></script>
     <script>
+        function exportTableToExcel(tableID, filename = '') {
+            var downloadLink;
+            var dataType = 'application/vnd.ms-excel';
+            var tableSelect = document.getElementById(tableID);
+            var tableHTML = tableSelect.outerHTML.replace(/ /g, '%20');
 
-function exportTableToExcel(tableID, filename = ''){
-      var downloadLink;
-      var dataType = 'application/vnd.ms-excel';
-      var tableSelect = document.getElementById(tableID);
-      var tableHTML = tableSelect.outerHTML.replace(/ /g, '%20');
+            // Specify file name
+            filename = filename ? filename + '.xls' : 'excel_data.xls';
 
-      // Specify file name
-      filename = filename?filename+'.xls':'excel_data.xls';
+            // Create download link element
+            downloadLink = document.createElement("a");
 
-      // Create download link element
-      downloadLink = document.createElement("a");
+            document.body.appendChild(downloadLink);
 
-      document.body.appendChild(downloadLink);
+            if (navigator.msSaveOrOpenBlob) {
+                var blob = new Blob(['\ufeff', tableHTML], {
+                    type: dataType
+                });
+                navigator.msSaveOrOpenBlob(blob, filename);
+            } else {
+                // Create a link to the file
+                downloadLink.href = 'data:' + dataType + ', ' + tableHTML;
 
-      if(navigator.msSaveOrOpenBlob){
-          var blob = new Blob(['\ufeff', tableHTML], {
-              type: dataType
-          });
-          navigator.msSaveOrOpenBlob( blob, filename);
-      }else{
-          // Create a link to the file
-          downloadLink.href = 'data:' + dataType + ', ' + tableHTML;
+                // Setting the file name
+                downloadLink.download = filename;
 
-          // Setting the file name
-          downloadLink.download = filename;
+                //triggering the function
+                downloadLink.click();
 
-          //triggering the function
-          downloadLink.click();
-
-          location.reload();
-      }
-  }
+                location.reload();
+            }
+        }
 
         $(document).ready(function() {
-            $(":submit").click(function() {
-                $(this).attr('disabled', 'disabled');
-                $('form').submit();
+            $("button input").click(function() {
+                if ($(this).attr('type') == "submit") {
+                    $(this).attr('disabled', 'disabled');
+                    $('form').not('#logout-form').submit();
+                }
             });
 
-            $('table').DataTable( {
-                columnDefs: [
-                {
-                    targets: [ 0, 1, 2 ],
-                    className: 'mdl-data-table__cell--non-numeric'
+            $('table').DataTable({
+                columnDefs: [{
+                    targets: [0, 1, 2]
+                    , className: 'mdl-data-table__cell--non-numeric'
                 }]
-            } );
+            });
 
             $('.export_btn').click(function() {
 
@@ -130,7 +128,8 @@ function exportTableToExcel(tableID, filename = ''){
 
                 exportTableToExcel(table_id, filename);
             });
-        } );
+        });
+
     </script>
 </body>
 

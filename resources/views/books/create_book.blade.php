@@ -41,7 +41,7 @@
                                     <div
                                         class="mdc-text-field mdc-text-field--outlined mdc-text-field--with-trailing-icon">
 
-                                        <input class="mdc-text-field__input" id="text-field-hero-input" type="text"
+                                        <input readonly value="Spectrum Book Publishers" class="mdc-text-field__input" id="text-field-hero-input" type="text"
                                             name="publisher" required>
                                         <div class="mdc-notched-outline">
                                             <div class="mdc-notched-outline__leading"></div>

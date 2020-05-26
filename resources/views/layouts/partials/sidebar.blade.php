@@ -14,113 +14,100 @@
             <nav class="mdc-list mdc-drawer-menu">
                 <div class="mdc-list-item mdc-drawer-item">
                     <a class="mdc-drawer-link" href="{{ url('/admin/dashboard') }}">
-                        <i class="material-icons mdc-list-item__start-detail mdc-drawer-item-icon"
-                            aria-hidden="true">home</i>
+                        <i class="material-icons mdc-list-item__start-detail mdc-drawer-item-icon" aria-hidden="true">home</i>
                         Dashboard
                     </a>
                 </div>
                 <div class="mdc-list-item mdc-drawer-item" tabindex="0">
                     <a class="mdc-expansion-panel-link" href="#" data-toggle="expansionPanel" data-target="ui-sub-menu" tabindex="-1">
-                      <i class="material-icons mdc-list-item__start-detail mdc-drawer-item-icon" aria-hidden="true">dashboard</i>
-                      Books Management
-                      <i class="mdc-drawer-arrow material-icons">chevron_right</i>
+                        <i class="material-icons mdc-list-item__start-detail mdc-drawer-item-icon" aria-hidden="true">dashboard</i>
+                        Books Management
+                        <i class="mdc-drawer-arrow material-icons">chevron_right</i>
                     </a>
                     <div class="mdc-expansion-panel" id="ui-sub-menu" style="display: block;">
-                      <nav class="mdc-list mdc-drawer-submenu">
-                        <div class="mdc-list-item mdc-drawer-item" tabindex="-1">
-                          <a class="mdc-drawer-link" href="{{ url('admin/books/create-books') }}" tabindex="-1">
-                            <i class="material-icons mdc-list-item__start-detail mdc-drawer-item-icon"
-                            aria-hidden="true">cloud_upload</i>
-                            Add New Book
-                          </a>
-                        </div>
-                        <div class="mdc-list-item mdc-drawer-item">
-                            <a class="mdc-drawer-link" href="{{ url('admin/books/uploaded-books') }}">
-                                <i class="material-icons mdc-list-item__start-detail mdc-drawer-item-icon"
-                                    aria-hidden="true">cloud_done</i>
-                                Uploaded Books
-                            </a>
-                        </div>
-                        <div class="mdc-list-item mdc-drawer-item">
-                            <a class="mdc-drawer-link" href="{{ url('admin/books/deleted-books') }}">
-                                <i class="material-icons mdc-list-item__start-detail mdc-drawer-item-icon"
-                                    aria-hidden="true">delete</i>
-                                Deleted Books
-                            </a>
-                        </div>
-                      </nav>
+                        <nav class="mdc-list mdc-drawer-submenu">
+                            <div class="mdc-list-item mdc-drawer-item" tabindex="-1">
+                                <a class="mdc-drawer-link" href="{{ url('admin/books/create-books') }}" tabindex="-1">
+                                    <i class="material-icons mdc-list-item__start-detail mdc-drawer-item-icon" aria-hidden="true">cloud_upload</i>
+                                    Add New Book
+                                </a>
+                            </div>
+                            <div class="mdc-list-item mdc-drawer-item">
+                                <a class="mdc-drawer-link" href="{{ url('admin/books/uploaded-books') }}">
+                                    <i class="material-icons mdc-list-item__start-detail mdc-drawer-item-icon" aria-hidden="true">cloud_done</i>
+                                    Uploaded Books
+                                </a>
+                            </div>
+                            <div class="mdc-list-item mdc-drawer-item">
+                                <a class="mdc-drawer-link" href="{{ url('admin/books/deleted-books') }}">
+                                    <i class="material-icons mdc-list-item__start-detail mdc-drawer-item-icon" aria-hidden="true">delete</i>
+                                    Deleted Books
+                                </a>
+                            </div>
+                        </nav>
                     </div>
                 </div>
                 <div class="mdc-list-item mdc-drawer-item" tabindex="-1">
                     <a class="mdc-expansion-panel-link" href="#" data-toggle="expansionPanel" data-target="key-management" tabindex="-1">
                         <i class="material-icons mdc-list-item__start-detail mdc-drawer-item-icon" aria-hidden="true">lock</i>
-                            License Key MGT.
+                        License Key MGT.
                         <i class="mdc-drawer-arrow material-icons">chevron_right</i>
                     </a>
                     <div class="mdc-expansion-panel" id="key-management">
                         <nav class="mdc-list mdc-drawer-submenu">
                             <div class="mdc-list-item mdc-drawer-item" tabindex="-1">
-                            <a class="mdc-drawer-link" href="{{route('keys.index')}}" tabindex="-1">
-                                <i class="material-icons mdc-list-item__start-detail mdc-drawer-item-icon"
-                            aria-hidden="true">view_list</i>
-                                All Licenses
-                            </a>
+                                <a class="mdc-drawer-link" href="{{route('keys.index')}}" tabindex="-1">
+                                    <i class="material-icons mdc-list-item__start-detail mdc-drawer-item-icon" aria-hidden="true">view_list</i>
+                                    All Licenses
+                                </a>
                             </div>
                             <div class="mdc-list-item mdc-drawer-item" tabindex="-1">
-                            <a class="mdc-drawer-link" href="{{route('keys.create')}}" tabindex="-1">
-                                <i class="material-icons mdc-list-item__start-detail mdc-drawer-item-icon"
-                            aria-hidden="true">build</i>
-                                New License
-                            </a>
+                                <a class="mdc-drawer-link" href="{{route('keys.create')}}" tabindex="-1">
+                                    <i class="material-icons mdc-list-item__start-detail mdc-drawer-item-icon" aria-hidden="true">build</i>
+                                    New License
+                                </a>
                             </div>
                             <div class="mdc-list-item mdc-drawer-item">
                                 <a class="mdc-drawer-link" href="{{ url('/admin/licenses/used-licenses') }}">
-                                    <i class="material-icons mdc-list-item__start-detail mdc-drawer-item-icon"
-                                        aria-hidden="true">track_changes</i>
+                                    <i class="material-icons mdc-list-item__start-detail mdc-drawer-item-icon" aria-hidden="true">track_changes</i>
                                     Used Licenses
                                 </a>
                             </div>
                         </nav>
                     </div>
-                  </div>
+                </div>
 
                 @if(Auth::guard('admin')->user()->can('isSuperAdmin'))
-                    <div class="mdc-list-item mdc-drawer-item">
-                        <a class="mdc-drawer-link" href="{{ url('/admin/accounts/activate-accounts') }}">
-                            <i class="material-icons mdc-list-item__start-detail mdc-drawer-item-icon"
-                                aria-hidden="true">check</i>
-                            Activate Accounts
-                        </a>
-                    </div>
-                    <div class="mdc-list-item mdc-drawer-item">
-                        <a class="mdc-drawer-link" href="{{ url('/admin/api_accesskey_management') }}">
-                            <i class="material-icons mdc-list-item__start-detail mdc-drawer-item-icon"
-                                aria-hidden="true">code</i>
-                            API Access Keys
-                        </a>
-                    </div>
-                    <div class="mdc-list-item mdc-drawer-item">
-                        <a class="mdc-drawer-link" href="{{ url('admin/licenses/accounting-module') }}">
-                            <i class="material-icons mdc-list-item__start-detail mdc-drawer-item-icon"
-                                aria-hidden="true">euro_symbol</i>
-                            Accounting Module
-                        </a>
-                    </div>
+                <div class="mdc-list-item mdc-drawer-item">
+                    <a class="mdc-drawer-link" href="{{ url('/admin/accounts/activate-accounts') }}">
+                        <i class="material-icons mdc-list-item__start-detail mdc-drawer-item-icon" aria-hidden="true">check</i>
+                        Activate Accounts
+                    </a>
+                </div>
+                <div class="mdc-list-item mdc-drawer-item">
+                    <a class="mdc-drawer-link" href="{{ url('/admin/api_accesskey_management') }}">
+                        <i class="material-icons mdc-list-item__start-detail mdc-drawer-item-icon" aria-hidden="true">code</i>
+                        API Access Keys
+                    </a>
+                </div>
+                <div class="mdc-list-item mdc-drawer-item">
+                    <a class="mdc-drawer-link" href="{{ url('admin/licenses/accounting-module') }}">
+                        <i class="material-icons mdc-list-item__start-detail mdc-drawer-item-icon" aria-hidden="true">euro_symbol</i>
+                        Accounting Module
+                    </a>
+                </div>
                 @endif
                 <div class="mdc-list-item mdc-drawer-item">
                     <a class="mdc-drawer-link" href="{{ url('/admin/audit-logs') }}">
-                        <i class="material-icons mdc-list-item__start-detail mdc-drawer-item-icon"
-                            aria-hidden="true">pie_chart_outlined</i>
+                        <i class="material-icons mdc-list-item__start-detail mdc-drawer-item-icon" aria-hidden="true">pie_chart_outlined</i>
                         Audit Logs
                     </a>
                 </div>
             </nav>
         </div>
         <div class="profile-actions">
-            <a href="javascript:;">Settings</a>
             <span class="divider"></span>
-            <a href="{{ route('admin.logout') }}"
-                onclick="event.preventDefault();
+            <a href="{{ route('admin.logout') }}" onclick="event.preventDefault();
                 document.getElementById('logout-form').submit();">
                 {{ __('Logout') }}
             </a>

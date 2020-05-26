@@ -39,6 +39,7 @@
                     </tr>
                 </tfoot>
             </table>
+            <button type="button" class="export_btn" title="{{ "License Accounts ".date('l jS F Y \a\t g:i:a') }}">Export to CSV</button>
         </div>
     </div>
 </div>

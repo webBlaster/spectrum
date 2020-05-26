@@ -48,7 +48,7 @@
                                         class="mdc-text-field mdc-text-field--outlined mdc-text-field--with-trailing-icon">
 
                                         <input class="mdc-text-field__input" id="text-field-hero-input" type="text"
-                                            name="publisher" required value="{{ $book->publisher }}">
+                                            name="publisher" required readonly value="Spectrum Book Publishers">
                                         <div class="mdc-notched-outline">
                                             <div class="mdc-notched-outline__leading"></div>
                                             <div class="mdc-notched-outline__notch">

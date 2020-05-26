@@ -37,9 +37,9 @@
                                 <div class="col-md-3 mb-3">
                                     <label for="price">Price</label>
                                     <input class="form-control"  v-model="form.price" :class="{ 'is-invalid':form.errors.has('price')}" type="number"  min="1" @keypress="forceDigit($event)" required>
-                                    <has-error :form="form" field="price"></has-error> 
+                                    <has-error :form="form" field="price"></has-error>
                                 </div>
-                            </div>                        
+                            </div>
                         </div>
                         <div class="card-footer text-right">
                             <a href="keys" class="btn btn-primary btn-md"><i class="fas fa-eye"></i>View All</a>
@@ -72,12 +72,12 @@
                             </div>
                             <div class="col-md-7 mb-3">
                                 <label for="" >Price</label>
-                                <div class="input-group"> 
+                                <div class="input-group">
                                     <div class="input-group-prepend">
                                         <span class="input-group-text" id="inputGroupPrepend">N</span>
                                     </div>
                                     <div aria-describedby="inputGroupPrepend" class="form-control text-muted"> {{form.price}} </div>
-                                </div>   
+                                </div>
                             </div>
                             <div class="col-md-12 mb-3">
                                 <label for="" ></label>
@@ -97,14 +97,14 @@
 
         <div v-show="confirmode">
             <div id="toolbar">
-                
+
             </div>
             <bootstrap-table :data="relatedBooks" :options="myOptions" :columns="myColumns" />
             <div class="mt-3 text-right">
                 <button class="btn btn-info btn-lg" @click="selectedBooks">Submit Books</button>
             </div>
         </div>
-        
+
     </div>
 </template>
 
@@ -138,7 +138,7 @@ export default {
             relatedBooks: [],
 
             myOptions: {
-                search: true, 
+                search: true,
                 pagination: true,
                 showColumns: true,
                 toolbar: '#toolbar',
@@ -169,8 +169,8 @@ export default {
             if(!(event.keyCode >= 48 && event.keyCode <= 57)) {
                 return event.preventDefault()
             }else {
-               return false 
-            } 
+               return false
+            }
         },
         generateLicense() {
             this.form.license_category = this.selected;
@@ -187,9 +187,9 @@ export default {
         // generateRandomMsisdn() {
         //     let result = '';
         //     const characters = '568740025766248514599874331458746963241569', length = 10;
-        //     for(let i = 0; i < length; i++) { 
+        //     for(let i = 0; i < length; i++) {
         //         result += characters.charAt(Math.floor(Math.random() * characters.length));
-        //     } 
+        //     }
         //     console.log('234' + result);
         // },
         licenseType(option) {
@@ -244,7 +244,7 @@ export default {
     created() {
         axios('/admin/licenses/license-groups')
         .then((data) => {
-           
+
             const license_group = data.data;
             license_group.forEach((text, value) => {
                 this.options.push({'text' : text.name, 'value' : text.id});
