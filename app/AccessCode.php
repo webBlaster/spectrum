@@ -9,7 +9,7 @@ use Illuminate\Database\Eloquent\SoftDeletes;
 class AccessCode extends Model
 {
     use HasUUID, SoftDeletes;
-    protected $fillable = ['code', 'license_name', 'books_contained', 'price', 'max_number_of_users', 'duration', 'group_id'];
+    protected $fillable = ['code', 'expires', 'license_name', 'books_contained', 'price', 'max_number_of_users', 'duration', 'group_id'];
 
     public function group() {
         return $this->belongsTo('App\Group');

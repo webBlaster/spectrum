@@ -30,7 +30,7 @@ class UsedLicensesResourceCollection extends Resource
             'used_key'              =>              $this->access_code,
             'name'                  =>              strtoupper($this->first_name) . ' ' . $this->last_name,
             'device_imei'           =>              $this->imei,
-            'activation_date'       =>              $this->activation_date,
+            'activation_date'       =>              $this->uuiactivation_dated,
             'expires'               =>              $expires,
             'access_code_uuid'      =>              $access_code_uuid,
             'category'              =>              $category,

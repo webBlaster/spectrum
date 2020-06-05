@@ -124,7 +124,6 @@ Route::group(['prefix' => 'admin',  'namespace' => 'Admin'], function () {
         Route::get('/preview-book/{id}', 'SpectrumBooksController@preview');
     });
 
-
     Route::group(['namespace' => 'Developer'], function () {
         Route::resource('api_accesskey_management', 'DeveloperApiKeyController');
         Route::get('view-apiaccess-key', 'DeveloperApiKeyController@showKey');

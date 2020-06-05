@@ -20,14 +20,16 @@ export default {
     methods: {
         createNotification() {
             // $('#form').submit();
+            $('#notify').attr('disabled', true)
             this.$Progress.start();
             this.form.post('/admin/notification')
             .then(() => {
+                $('#notify').attr('disabled', false)
                 this.show = false;
                 this.form.reset();
                 swal.fire(
-                    'Home Update',
-                    'Home has been Updated.',
+                    'Success',
+                    'Notification Sent.',
                     'success'
                 )
                 this.$Progress.finish();

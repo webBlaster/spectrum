@@ -22,7 +22,7 @@
             </div>
       
             <div class="table-responsive">
-                <table class="table table-hoverable">
+                <table class="table">
                 <thead>
                     <tr>
                     <th class="text-left">S/N</th>

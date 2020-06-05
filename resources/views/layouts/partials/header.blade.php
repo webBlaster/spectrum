@@ -80,6 +80,7 @@
                   <b-button
                     variant="primary"
                     size="md"
+                    id="notify"
                     class="float-right"
                     @click="createNotification()"
                   >

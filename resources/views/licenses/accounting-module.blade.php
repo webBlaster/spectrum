@@ -18,6 +18,7 @@
                 </thead>
                 <tbody>
                     @php($count = 0)
+                    @php($sum = $access_codes->sum('price'))
                     @foreach ($access_codes as $access_code)
                     @php(++$count)
                     <tr>
@@ -31,11 +32,10 @@
                 </tbody>
                 <tfoot>
                     <tr>
-                        <td></td>
-                        <td class="text-left">Summary and Totals</td>
-                        <td>NAN</td>
-                        <td>{{ $total_number_of_users }}</td>
-                        <td>{{ $total_revenue }}</td>
+                        <td class="text-left" colspan="2">Summary and Totals</td>
+                        <td>{{$sum}}</td>
+                        <td class="text-right">{{ $total_number_of_users }}</td>
+                        <td class="text-right">{{ $total_revenue }}</td>
                     </tr>
                 </tfoot>
             </table>

@@ -1,6 +1,6 @@
 <template>
      <div class="container">
-        <div class="row justify-content-center" v-show="displayGenerate">
+        <div class="row justify-content-center text-center" v-show="displayGenerate">
             <div class="col-md-6 mb-2" v-show="!confirmode">
                 <div class="card card-default border border-info shadow">
                     <form>
@@ -42,13 +42,13 @@
                             </div>
                         </div>
                         <div class="card-footer text-right">
-                            <a href="keys" class="btn btn-primary btn-md"><i class="fas fa-eye"></i>View All</a>
                             <button  type="submit" class="mdc-button mdc-button--raised filled-button--info" @click.prevent="generateLicense">
                                 Generate License
                             </button>
                         </div>
                     </form>
                 </div>
+                <a href="keys" class="font-weight-bold">View All Generated Licenses</a>
             </div>
 
             <!-- Resulting Data -->

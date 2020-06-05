@@ -63,77 +63,76 @@ class Handler extends ExceptionHandler
         return $request->expectsJson()
                 ? response()->json([
                     'message'       => $exception->getMessage(),
-                    'data'          => '',
+                    'data'          => [],
                     'status'        => 0
                 ], 401)
                 : redirect()->guest($exception->redirectTo() ?? route('login'));
     }
     public function render($request, Exception $exception)
     {
-        // dd($exception);
-        // if( $request->expectsJson()) {
-        //     if($exception instanceof ModelNotFoundException) {
-        //         return response()->json([
-        //             'message'   =>  'Cannot find the requested model',
-        //             'data'      =>  '',
-        //             'status'    =>  0
-        //         ], Response::HTTP_FORBIDDEN);
-        //     }
-        // }
+        if( $request->expectsJson()) {
+            if($exception instanceof ModelNotFoundException) {
+                return response()->json([
+                    'message'   =>  'Cannot find the requested model',
+                    'data'      =>  [],
+                    'status'    =>  0
+                ], Response::HTTP_FORBIDDEN);
+            }
+        }
         
-        // if( $request->expectsJson()) {
-        //     if($exception instanceof NotFoundHttpException) {
-        //         return response()->json([
-        //             'message'   =>  'invalid url or endpoint specified (hint: ensure you attach an API KEY, enter a complete endpoint URL)',
-        //             'data'      =>  '',
-        //             'status'    =>  0
+        if( $request->expectsJson()) {
+            if($exception instanceof NotFoundHttpException) {
+                return response()->json([
+                    'message'   =>  'invalid url or endpoint specified (hint: ensure you attach an API KEY, enter a complete endpoint URL)',
+                    'data'      =>  [],
+                    'status'    =>  0
                     
-        //         ], Response::HTTP_BAD_GATEWAY);
-        //     }
-        // }
+                ], Response::HTTP_BAD_GATEWAY);
+            }
+        }
        
-        // if( $request->expectsJson()) {
-        //     if($exception instanceof MethodNotAllowedHttpException) {
-        //         return response()->json([
-        //             'message'   =>  'The HTTP request method isn\'t allowed on this endpoint, Try another method (e.g: POST, GET, PUT(must have a target id), etc)',
-        //             'data'      =>  '',
-        //             'status'    =>  0
+        if( $request->expectsJson()) {
+            if($exception instanceof MethodNotAllowedHttpException) {
+                return response()->json([
+                    'message'   =>  'The HTTP request method isn\'t allowed on this endpoint, Try another method (e.g: POST, GET, PUT(must have a target id), etc)',
+                    'data'      =>  [],
+                    'status'    =>  0
                     
-        //         ], Response::HTTP_METHOD_NOT_ALLOWED);
-        //     }
-        // }
+                ], Response::HTTP_METHOD_NOT_ALLOWED);
+            }
+        }
         
-        // if($request ->expectsJson()) {
-        //     if($exception instanceof RouteNotFoundException) {
-        //         return response()->json([
-        //             'message'   =>  'The Requested url does not exist',
-        //             'data'      =>  '',
-        //             'status'    =>  0
+        if($request ->expectsJson()) {
+            if($exception instanceof RouteNotFoundException) {
+                return response()->json([
+                    'message'   =>  'The Requested url does not exist',
+                    'data'      =>  [],
+                    'status'    =>  0
                    
-        //         ], Response::HTTP_INTERNAL_SERVER_ERROR);
-        //     }
-        // }
-        // if( $request->expectsJson()) {
-        //     if ($exception instanceof BadMethodCallException) {
-        //         return response()->json([
-        //             'message'   =>  'Wrong Http request made, check if the request type is supported on this endpoint',
-        //             'data'      =>  '',
-        //             'status'    =>  0
+                ], Response::HTTP_INTERNAL_SERVER_ERROR);
+            }
+        }
+        if( $request->expectsJson()) {
+            if ($exception instanceof BadMethodCallException) {
+                return response()->json([
+                    'message'   =>  'Wrong Http request made, check if the request type is supported on this endpoint',
+                    'data'      =>  [],
+                    'status'    =>  0
                 
-        //         ], Response::HTTP_INTERNAL_SERVER_ERROR);
-        //     }
-        // }
+                ], Response::HTTP_INTERNAL_SERVER_ERROR);
+            }
+        }
         
-        // if( $request->expectsJson()) {
-        //     if ($exception instanceof RouteNotFoundException) {
-        //         return response()->json([
-        //             'message'   =>  'The requested endpoint does not exist',
-        //             'data'      =>  '',
-        //             'status'    =>  0
+        if( $request->expectsJson()) {
+            if ($exception instanceof RouteNotFoundException) {
+                return response()->json([
+                    'message'   =>  'The requested endpoint does not exist',
+                    'data'      =>  [],
+                    'status'    =>  0
                 
-        //         ], Response::HTTP_INTERNAL_SERVER_ERROR);
-        //     }
-        // }
+                ], Response::HTTP_INTERNAL_SERVER_ERROR);
+            }
+        }
         
         
         return parent::render($request, $exception);

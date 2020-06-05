@@ -5,25 +5,31 @@ namespace App\Http\Middleware;
 use Carbon\Carbon;
 use Closure;
 use App\DeveloperApiKey;
+use Symfony\Component\HttpFoundation\Response;
+
 class ApiKey
 {
     public function handle($request, Closure $next)
     {
-        if($request->apikey == '') {
+
+        $request->headers->set('Accept', 'application/json');
+        $apikey = $request->header('APP-KEY');
+        if($apikey == '') {
             return response()->json([
-                'message' => 'Please provide a valid API KEY',
+                'content' => $request->header(),
+                'message' => 'APP-KEY is required to continue',
                 'data' => '',
                 'status' => 0
-            ]);
+            ], Response::HTTP_UNAUTHORIZED);
         } else {
             $present = Carbon::now();
-            $apikey = DeveloperApiKey::where('key', $request->apikey)->where('valid_from', '<=', $present)->where('valid_till', '>=', $present)->first();
+            $apikey = DeveloperApiKey::where('key', $apikey)->where('valid_from', '<=', $present)->where('valid_till', '>=', $present)->first();
             if(!$apikey) {
                 return response()->json([
-                    'message' => 'Invalid API KEY',
+                    'message' => 'Invalid APP-KEY',
                     'data' => '',
                     'status' => 0
-                ]);
+                ], Response::HTTP_UNAUTHORIZED);
             } else {
                 return $next($request);
             }

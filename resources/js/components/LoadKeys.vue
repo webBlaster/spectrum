@@ -47,7 +47,7 @@
 
 
         <div id="toolbar">
-            <a href="manage-apiaccess-keys/create" @click.prevent="newModal" class="btn btn-primary"><i class="fas fa-plus-circle"></i> Add New</a>
+            <a href="api_accesskey_management/create" @click.prevent="newModal" class="btn btn-primary"><i class="fas fa-plus-circle"></i> Add New</a>
             <!-- <a href="/recycle-posts" class="btn btn-danger"><i class="fas fa-trash-alt"></i> Recycle Bins</a> -->
             <button class="btn btn-danger" @click="checkPosts"><i class="fas fa-minus-circle"></i> Delete Selected</button>
         </div>
@@ -156,7 +156,7 @@
                     if(result.value) {
                         this.mySelections.forEach((item, key) =>{
                             // send request to the server
-                            axios.delete('/admin/manage-apiaccess-keys/'+item, {
+                            axios.delete('/admin/api_accesskey_management/'+item, {
                                 id: item
                             })
                             .then(()=>{
@@ -207,7 +207,7 @@
                     this.$Progress.start();
                     // send request to the server
                     if(result.value) {
-                        axios.delete('/admin/manage-apiaccess-keys/'+row.duid, {
+                        axios.delete('/admin/api_accesskey_management/'+row.duid, {
                             id: row.duid
                         })
                         .then(()=>{
@@ -229,7 +229,7 @@
             },
             createKey() {
                 this.$Progress.start();
-                this.form.post('/admin/manage-apiaccess-keys')
+                this.form.post('/admin/api_accesskey_management')
                 .then(()=> {
                     Fire.$emit('AfterCreate')
                     $('#addNew').modal('hide')
@@ -245,7 +245,7 @@
             },
             updateKey() {
                 this.$Progress.start();
-                this.form.put('/admin/manage-apiaccess-keys/' + this.form.duid)
+                this.form.put('/admin/api_accesskey_management/' + this.form.duid)
                 .then(() => {
                     $('#addNew').modal('hide')
                     swal.fire(

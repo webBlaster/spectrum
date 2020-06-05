@@ -48,5 +48,7 @@ class AuthServiceProvider extends ServiceProvider
     
         Passport::personalAccessTokensExpireIn(now()->addMinutes(60));
         //
+
+        Passport::loadKeysFrom(storage_path().'/oauth-keys');
     }
 }

@@ -26,7 +26,7 @@
 
 
     <!-- plugins:js -->
-    <script src="{{ asset('vendors/js/vendor.bundle.base.js')}}" async></script>
+    <script src="{{ asset('vendors/js/vendor.bundle.base.js')}}"></script>
 
     <style>
         table {
@@ -62,75 +62,102 @@
         </div>
     </div>
 
-    <script src="{{ asset('js/app.js')}}"></script>
+    <script src="{{ mix('js/app.js')}}"></script>
 
     <script src="{{ asset('js/material.js')}}"></script>
     <script src="{{ asset('js/misc.js')}}"></script>
     <!-- endinject -->
     <!-- Custom js for this page-->
     <script src="{{ asset('js/dashboard.js')}}"></script>
-    <!-- End custom js for this page-->
-    <script src="{{ asset('js/dataTables.min.js') }}"></script>
-    <script src="{{ asset('js/dataTables.material.min.js') }}"></script>
-    <script>
-        function exportTableToExcel(tableID, filename = '') {
-            var downloadLink;
-            var dataType = 'application/vnd.ms-excel';
-            var tableSelect = document.getElementById(tableID);
-            var tableHTML = tableSelect.outerHTML.replace(/ /g, '%20');
+   <!-- End custom js for this page-->
+ <script src="{{ asset('js/dataTables.min.js') }}"></script>
+ <script src="{{ asset('js/dataTables.material.min.js') }}"></script>
 
-            // Specify file name
-            filename = filename ? filename + '.xls' : 'excel_data.xls';
+<script>
+    function exportTableToExcel(tableID, filename = '') {
+        var downloadLink;
+        var dataType = 'application/vnd.ms-excel';
+        var tableSelect = document.getElementById(tableID);
+        var tableHTML = tableSelect.outerHTML.replace(/ /g, '%20');
 
-            // Create download link element
-            downloadLink = document.createElement("a");
+        // Specify file name
+        filename = filename ? filename + '.xls' : 'excel_data.xls';
 
-            document.body.appendChild(downloadLink);
+        // Create download link element
+        downloadLink = document.createElement("a");
 
-            if (navigator.msSaveOrOpenBlob) {
-                var blob = new Blob(['\ufeff', tableHTML], {
-                    type: dataType
-                });
-                navigator.msSaveOrOpenBlob(blob, filename);
-            } else {
-                // Create a link to the file
-                downloadLink.href = 'data:' + dataType + ', ' + tableHTML;
+        document.body.appendChild(downloadLink);
 
-                // Setting the file name
-                downloadLink.download = filename;
+        if (navigator.msSaveOrOpenBlob) {
+            var blob = new Blob(['\ufeff', tableHTML], {
+                type: dataType
+            });
+            navigator.msSaveOrOpenBlob(blob, filename);
+        } else {
+            // Create a link to the file
+            downloadLink.href = 'data:' + dataType + ', ' + tableHTML;
 
-                //triggering the function
-                downloadLink.click();
+            // Setting the file name
+            downloadLink.download = filename;
 
-                location.reload();
-            }
+            //triggering the function
+            downloadLink.click();
+
+            location.reload();
         }
+    }
 
-        $(document).ready(function() {
-            $("button input").click(function() {
-                if ($(this).attr('type') == "submit") {
-                    $(this).attr('disabled', 'disabled');
-                    $('form').not('#logout-form').submit();
-                }
-            });
-
-            $('table').DataTable({
-                columnDefs: [{
-                    targets: [0, 1, 2]
-                    , className: 'mdl-data-table__cell--non-numeric'
-                }]
-            });
-
-            $('.export_btn').click(function() {
-
-                var filename = $(this).attr('title');
-                var table_id = $('table').attr('id');
-
-                exportTableToExcel(table_id, filename);
-            });
+    $(document).ready(function() {
+        $("button input").click(function() {
+            if ($(this).attr('type') == "submit") {
+                $(this).attr('disabled', 'disabled');
+                $('form').not('#logout-form').submit();
+            }
         });
 
-    </script>
+
+        // $('table').DataTable({
+        //     columnDefs: [{
+        //         targets: [0, 1, 2]
+        //         , className: 'mdl-data-table__cell--non-numeric'
+        //     }]
+        // });
+
+        const urlsEqual = (urlProp1, urlProp2) => {
+          const urls = new URL(urlProp1);
+          if(urlProp2.includes(urls.pathname)) {
+            return true;
+          }
+          return false;
+        }
+        const urls = [
+          '/admin/licenses/used-licenses',
+          '/admin/licenses/edit-license',
+          '/admin/dashboard'
+        ];
+         
+        if(!urlsEqual(window.location, urls)) {
+          $('table').DataTable({
+              columnDefs: [{
+                  targets: [0, 1, 2]
+                  , className: 'mdl-data-table__cell--non-numeric'
+              }]
+          });
+        }
+
+        
+
+
+        $('.export_btn').click(function() {
+
+            var filename = $(this).attr('title');
+            var table_id = $('table').attr('id');
+
+            exportTableToExcel(table_id, filename);
+        });
+    });
+</script>
+
 </body>
 
 </html>

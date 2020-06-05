@@ -95,7 +95,7 @@
                                     <div><label for="file-input" class=" form-control-label">Upload Book</label> &nbsp;
                                         &nbsp;
                                         <input type="file" id="file-input" required name="book"
-                                            class="form-control-file">
+                                            class="form-control-file" accept=".epub">
                                     </div>
                                 </div>
                             </div>
