@@ -16,7 +16,6 @@ class ApiKey
         $apikey = $request->header('APP-KEY');
         if($apikey == '') {
             return response()->json([
-                'content' => $request->header(),
                 'message' => 'APP-KEY is required to continue',
                 'data' => '',
                 'status' => 0
