@@ -15,74 +15,86 @@ class User {
 
     /**
      * @OA\Property(
-     *     title="User Id",
-     *     description="The unique id attached to each users",
-     *     example="4511bc60-a596-11ea-9fd6-e192a8af2bb6"
+     *     title="book_title",
+     *     description="The title of the book",
+     *     example="The green shades"
      * )
      *
      * @var string
      */
-    private $user_id;
+    private $book_title;
     
     /**
      * @OA\Property(
-     *     title="Email",
-     *     description="Email",
-     *     example="mailer@cloudware.ng",
-     *     format="email"
+     *     title="book_author",
+     *     description="The book witer",
+     *     example="Janes Smith@cloudware.ng"
      * )
      *
      * @var string
      */
-    private $email;
+    private $book_author;
 
     /**
      * @OA\Property(
-     *     title="first_name",
-     *     description="The user's first name",
-     *     example="Charles",
+     *     title="book_description",
+     *     description="Short summary",
+     *     example="This is the story of a young boy that came to make all prophecies come true",
      *     format="string",
      *     type="string"
      * )
      *
      * @var string
      */
-    private $first_name;
+    private $book_description;
 
     /**
      * @OA\Property(
-     *     title="last_name",
-     *     description="The user's last name",
-     *     example="Gabbage",
+     *     title="book_publisher",
+     *     description="Who published it",
+     *     example="Spectrum",
      *     format="string",
      *     type="string"
      * )
      *
      * @var string
      */
-    private $last_name;
+    private $book_publisher;
 
     /**
      * @OA\Property(
-     *     title="phone",
-     *     description="User's phone number",
-     *     example="08100001111"
+     *     title="date_published",
+     *     description="Book publication date",
+     *     example="2020-06-03",
+     *     format="datetime"
+     * )
+     *
+     * @var \DateTime
+     */
+    private $date_published;
+
+    /**
+     * @OA\Property(
+     *     title="download_link",
+     *     description="Book url location",
+     *     example="http://spectrumbooks.com/api/v1/download_link/eyJpdiI6IlZOb281aWJ2Z09kOU9CeTBRWmtwSlE9PSIsInZhbHVlIjoiMEhyMUJ6S3VMWit2NjNDS1RUNHAyUT09IiwibWFjIjoiMGM0MGUyNDI5ZGE1ZmQ2NjQ3YzlmMTlkNDU0YjE1YjBiMGFlMDc2MTJiMDliMGM1NjM4NzQ4YzhmM2JlMGI5MyJ9"
      * )
      *
      * @var string
      */
-    private $phone;
+    private $download_link;
+
 
     /**
      * @OA\Property(
-     *     title="access_code",
-     *     description="access code purchased to access a collection of books",
-     *     example="6853-9147-3890-9073"
+     *     title="front_cover",
+     *     description="Picture url location",
+     *     example="spectrumbooks.com/storage/books/front-covers/sNKgCvexbBX8ZWa1glsqOSu196NJJ05kqDGi57q4.jpeg"
      * )
      *
      * @var string
      */
-    private $access_code;
+    private $front_cover;
     
 
 }

@@ -45,7 +45,7 @@ class TestConnection {
      *      @OA\Response(
      *          response=400,
      *          description="Imei BLacklisted and can no longer login (Imei gets blacklisted after 5 failed login attempts",
-     *          @OA\JsonContent(ref="#/components/schemas/RegisterImei")
+     *          @OA\JsonContent(ref="#/components/schemas/ImeiBlackListed")
      *      )
      *     )
      */

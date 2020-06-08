@@ -69,7 +69,7 @@ class TestConnection {
      *          )
      *      ),
      *      @OA\Parameter(
-     *          name="phone",
+     *          name="access_code",
      *          in="query",
      *          required=true,
      *          @OA\Schema(

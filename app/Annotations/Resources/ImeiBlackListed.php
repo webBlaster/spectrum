@@ -14,7 +14,7 @@ namespace App\Annotations\Resources;
 
 
 
-class ImeiBlacklisted {
+class ImeiBlackListed {
 
 
     /**
