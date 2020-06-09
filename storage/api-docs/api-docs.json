@@ -1,0 +1,452 @@
+{
+    "openapi": "3.0.0",
+    "info": {
+        "title": "Spectrum API Endpoints Documentation",
+        "description": "This documentation contains all the table structure of the enpoints being used and all the endpoints accessible by a Second Party Application. This documentation is meant for internal use only",
+        "contact": {
+            "email": "akinmade.akintoye@cloudware.ng"
+        },
+        "license": {
+            "name": "Cloudware",
+            "url": "https://www.cloudware.ng"
+        },
+        "version": "1.0.0"
+    },
+    "servers": [
+        {
+            "url": "/api/v1",
+            "description": "Spectrum API Server"
+        }
+    ],
+    "paths": {
+        "/register_device": {
+            "post": {
+                "tags": [
+                    "Registers a Device Imei"
+                ],
+                "summary": "Accepts device Imei and return an authorization token to be used in future requests",
+                "description": "Returns an authorization token",
+                "operationId": "register_device",
+                "parameters": [
+                    {
+                        "name": "APP-KEY",
+                        "in": "header",
+                        "description": "Authentication KEY is required",
+                        "required": true,
+                        "schema": {
+                            "type": "string",
+                            "example": "0105d248a8c694c2b0704eabdb2fbcd1"
+                        }
+                    },
+                    {
+                        "name": "imei",
+                        "in": "query",
+                        "description": "Accepts a device Imei",
+                        "required": true,
+                        "schema": {
+                            "type": "string",
+                            "example": "02909487857"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Success, Device Imei has been successfully registered",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/RegisterImei"
+                                }
+                            }
+                        }
+                    },
+                    "401": {
+                        "description": "Couldn't login due to failed auhentication",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/FailedAuth"
+                                }
+                            }
+                        }
+                    },
+                    "400": {
+                        "description": "Imei BLacklisted and can no longer login (Imei gets blacklisted after 5 failed login attempts",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/ImeiBlackListed"
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "/register_user": {
+            "post": {
+                "tags": [
+                    "Registers users name against the earlier registered Imei"
+                ],
+                "summary": "Accepts first_name, last_name, phone_number etc.",
+                "description": "Returns a collection of books",
+                "operationId": "register_user",
+                "parameters": [
+                    {
+                        "name": "APP-KEY",
+                        "in": "header",
+                        "description": "Authentication KEY is required",
+                        "required": true,
+                        "schema": {
+                            "type": "string",
+                            "example": "0105d248a8c694c2b0704eabdb2fbcd1"
+                        }
+                    },
+                    {
+                        "name": "Authorization",
+                        "in": "header",
+                        "description": "Authorization token is required",
+                        "required": true,
+                        "schema": {
+                            "type": "string",
+                            "example": "hijciscmusc8sucosijnossuchj-03390eu98ujw09mde9ekf09efi0-w90-owe0iwefe,fi0f9weif0-wi"
+                        }
+                    },
+                    {
+                        "name": "user_id",
+                        "in": "query",
+                        "required": true,
+                        "schema": {
+                            "type": "string",
+                            "example": "iusiijxichimdioeueoiu"
+                        }
+                    },
+                    {
+                        "name": "first_name",
+                        "in": "query",
+                        "required": true,
+                        "schema": {
+                            "type": "string",
+                            "example": "Charles"
+                        }
+                    },
+                    {
+                        "name": "last_name",
+                        "in": "query",
+                        "required": true,
+                        "schema": {
+                            "type": "string",
+                            "example": "Gabbage"
+                        }
+                    },
+                    {
+                        "name": "phone",
+                        "in": "query",
+                        "required": true,
+                        "schema": {
+                            "type": "string",
+                            "example": "08100000111"
+                        }
+                    },
+                    {
+                        "name": "access_code",
+                        "in": "query",
+                        "required": true,
+                        "schema": {
+                            "type": "string",
+                            "example": "1234-5684-3949-9578"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Books Attached to the Access Code",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/UserResource"
+                                }
+                            }
+                        }
+                    },
+                    "401": {
+                        "description": "Unauthenticated",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/FailedAuth"
+                                }
+                            }
+                        }
+                    },
+                    "403": {
+                        "description": "Forbidden"
+                    }
+                }
+            }
+        },
+        "/test_connection": {
+            "get": {
+                "tags": [
+                    "Test if the API is accessible"
+                ],
+                "summary": "Test if the endpoints works, nothing is required",
+                "description": "Returns a success message",
+                "operationId": "test_connection",
+                "parameters": [
+                    {
+                        "name": "APP-KEY",
+                        "in": "header",
+                        "description": "Authentication APIKEY is required",
+                        "required": true,
+                        "schema": {
+                            "type": "string",
+                            "example": "0105d248a8c694c2b0704eabdb2fbcd1"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "You have successfully reached the spectrum API endpoint"
+                    },
+                    "401": {
+                        "description": "Unauthenticated"
+                    },
+                    "403": {
+                        "description": "Forbidden"
+                    }
+                }
+            }
+        }
+    },
+    "components": {
+        "schemas": {
+            "ImeiFailedReg": {
+                "title": "Register Imei",
+                "description": "Registers the user Imei",
+                "type": "array",
+                "items": {
+                    "properties": {
+                        "imei": {
+                            "type": "integer"
+                        }
+                    },
+                    "type": "object"
+                }
+            },
+            "Notification": {
+                "title": "Notifications",
+                "description": "Notifications Table",
+                "properties": {
+                    "title": {
+                        "title": "Title",
+                        "description": "The title of the notification being sent",
+                        "type": "string",
+                        "example": "New App Release"
+                    },
+                    "notitication": {
+                        "title": "Content",
+                        "description": "The content of the notification being sent",
+                        "type": "string",
+                        "example": "Due to the bug in the recent release of our app, we are releasing a fix "
+                    },
+                    "date": {
+                        "title": "date",
+                        "description": "When the notification was sent",
+                        "type": "string",
+                        "format": "datetime",
+                        "example": "30/06/2020"
+                    }
+                },
+                "type": "object"
+            },
+            "User": {
+                "title": "Register User",
+                "description": "User model",
+                "required": [
+                    "imei"
+                ],
+                "properties": {
+                    "book_title": {
+                        "title": "book_title",
+                        "description": "The title of the book",
+                        "type": "string",
+                        "example": "The green shades"
+                    },
+                    "book_author": {
+                        "title": "book_author",
+                        "description": "The book witer",
+                        "type": "string",
+                        "example": "Janes Smith@cloudware.ng"
+                    },
+                    "book_description": {
+                        "title": "book_description",
+                        "description": "Short summary",
+                        "type": "string",
+                        "format": "string",
+                        "example": "This is the story of a young boy that came to make all prophecies come true"
+                    },
+                    "book_publisher": {
+                        "title": "book_publisher",
+                        "description": "Who published it",
+                        "type": "string",
+                        "format": "string",
+                        "example": "Spectrum"
+                    },
+                    "date_published": {
+                        "title": "date_published",
+                        "description": "Book publication date",
+                        "type": "string",
+                        "format": "datetime",
+                        "example": "2020-06-03"
+                    },
+                    "download_link": {
+                        "title": "download_link",
+                        "description": "Book url location",
+                        "type": "string",
+                        "example": "http://spectrumbooks.com/api/v1/download_link/eyJpdiI6IlZOb281aWJ2Z09kOU9CeTBRWmtwSlE9PSIsInZhbHVlIjoiMEhyMUJ6S3VMWit2NjNDS1RUNHAyUT09IiwibWFjIjoiMGM0MGUyNDI5ZGE1ZmQ2NjQ3YzlmMTlkNDU0YjE1YjBiMGFlMDc2MTJiMDliMGM1NjM4NzQ4YzhmM2JlMGI5MyJ9"
+                    },
+                    "front_cover": {
+                        "title": "front_cover",
+                        "description": "Picture url location",
+                        "type": "string",
+                        "example": "spectrumbooks.com/storage/books/front-covers/sNKgCvexbBX8ZWa1glsqOSu196NJJ05kqDGi57q4.jpeg"
+                    }
+                },
+                "type": "object"
+            },
+            "UserImei": {
+                "title": "Register Imei",
+                "description": "Registers the user Imei",
+                "required": [
+                    "imei"
+                ],
+                "properties": {
+                    "token": {
+                        "title": "token",
+                        "description": "Authentication Token",
+                        "type": "string",
+                        "example": "jksnxoiscxsijsxosice-w0d90-d9w0d9wu9wwcbscsssd98cyhjosmxus="
+                    },
+                    "expires": {
+                        "title": "expires",
+                        "description": "Token Duration",
+                        "type": "string",
+                        "example": "60mins"
+                    },
+                    "user_id": {
+                        "title": "user_id",
+                        "description": "User's unique id",
+                        "type": "string",
+                        "example": "Xisuhsyusuxuisjeicjic-w0903"
+                    }
+                },
+                "type": "object"
+            },
+            "FailedAuth": {
+                "title": "ImeiResource",
+                "description": "Imei resource",
+                "properties": {
+                    "message": {
+                        "title": "message",
+                        "description": "User not authenticated or Token Expired",
+                        "type": "string",
+                        "example": "unauthenticated"
+                    },
+                    "status": {
+                        "title": "status",
+                        "description": "status of response",
+                        "type": "string",
+                        "example": 0
+                    }
+                },
+                "type": "object",
+                "xml": {
+                    "name": "ImeiResource"
+                }
+            },
+            "ImeiBlackListed": {
+                "title": "ImeiResource",
+                "description": "Imei resource",
+                "properties": {
+                    "message": {
+                        "title": "message",
+                        "description": "User Imei blaclisted due to 5 failed requests",
+                        "type": "string",
+                        "example": "The requested IMEI is blacklisted"
+                    },
+                    "status": {
+                        "title": "status",
+                        "description": "status of response",
+                        "type": "string",
+                        "example": 0
+                    }
+                },
+                "type": "object",
+                "xml": {
+                    "name": "ImeiResource"
+                }
+            },
+            "RegisterImei": {
+                "title": "ImeiResource",
+                "description": "Imei resource",
+                "properties": {
+                    "message": {
+                        "title": "message",
+                        "description": "Response Text",
+                        "type": "string",
+                        "example": "Device Imei successfully Registered"
+                    },
+                    "data": {
+                        "title": "Data",
+                        "description": "Data wrapper",
+                        "type": "array",
+                        "items": {
+                            "$ref": "#/components/schemas/UserImei"
+                        }
+                    },
+                    "status": {
+                        "title": "status",
+                        "description": "status of response",
+                        "type": "string",
+                        "example": 1
+                    }
+                },
+                "type": "object",
+                "xml": {
+                    "name": "ImeiResource"
+                }
+            },
+            "UserResource": {
+                "title": "UserResource",
+                "description": "User resource",
+                "properties": {
+                    "message": {
+                        "title": "message",
+                        "description": "Suucess Response",
+                        "type": "string",
+                        "example": "Success, see attached books below"
+                    },
+                    "data": {
+                        "title": "Data",
+                        "description": "Data wrapper",
+                        "type": "array",
+                        "items": {
+                            "$ref": "#/components/schemas/User"
+                        }
+                    },
+                    "status": {
+                        "title": "status",
+                        "description": "status of response",
+                        "type": "string",
+                        "example": 1
+                    }
+                },
+                "type": "object",
+                "xml": {
+                    "name": "UserResource"
+                }
+            }
+        }
+    }
+}
