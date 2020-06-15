@@ -191,7 +191,7 @@ class SpectrumApiController extends Controller
 
             $decrypted_book->send($name, $extension, true);
         } catch(ErrorException $e) {
-            return $this->falied('Error Downloading from server');
+            return $this->failed('Error Downloading from server');
         }
     }
 
