@@ -30,3 +30,16 @@ Route::namespace('API')->prefix('v1')->group(function() {
 
         // Route::get('image_download_link/{book_id}', 'SpectrumApiController@downloadBooks')->name('api.stream_download');
 });
+
+Route::namespace('API')->prefix('v2')->group(function() {
+    Route::group(['middleware' => 'ApiKey'], function () {
+        Route::get('test_connection', 'SpectrumApiControllerV2@index');
+        Route::post('register_device', 'SpectrumApiControllerV2@store');
+        Route::post('register_user', 'SpectrumApiControllerV2@update');
+        Route::get('notifications', 'SpectrumApiControllerV2@notification')->name('api.notification');
+    });
+    
+    Route::get('download_link/{book_id}', 'SpectrumApiControllerV2@downloadBooks')->name('api.download_linkv2');
+
+        // Route::get('image_download_link/{book_id}', 'SpectrumApiController@downloadBooks')->name('api.stream_download');
+});
